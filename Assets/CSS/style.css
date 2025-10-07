@@ -1,0 +1,614 @@
+/* ===================================================
+   BASE STYLES & TYPOGRAPHY
+   =================================================== */
+
+:root {
+    --primary-color: #007bff; /* น้ำเงินหลัก */
+    --secondary-color: #28a745; /* เขียวสำหรับปุ่มสำเร็จ */
+    --accent-color: #ffc107; /* เหลืองสำหรับเน้น */
+    --text-color: #343a40; /* ข้อความหลัก */
+    --sub-text-color: #6c757d; /* ข้อความรอง */
+    --bg-light: #f8f9fa; /* พื้นหลังเบา */
+    --bg-white: #ffffff;
+    --border-color: #e9ecef;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 1.7em;
+    color: var(--text-color);
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.carb-h3 {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.warning-text {
+    color: #dc3545;
+    font-weight: 600;
+    font-size: 0.95em;
+    background-color: #fff3f3;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #f5c6cb;
+}
+
+.footer-note {
+    text-align: center;
+    font-size: 0.85em;
+    color: var(--sub-text-color);
+    margin-top: 40px;
+}
+
+/* ===================================================
+   CARD & INPUT STYLES
+   =================================================== */
+
+.card {
+    background-color: var(--bg-white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--sub-text-color);
+    font-size: 0.95em;
+}
+
+input[type="number"], select, input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: 'Sarabun', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="number"]:focus, select:focus, input[type="text"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+/* Search Input Styling */
+.search-group {
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-light);
+    margin-bottom: 20px;
+}
+.search-group label {
+    font-weight: 700;
+    color: var(--text-color);
+}
+.search-group input[type="text"] {
+    font-size: 1em;
+}
+
+/* ===================================================
+   BUTTON & RESULT STYLES
+   =================================================== */
+
+.calculate-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 30px;
+    background-color: var(--secondary-color);
+    color: var(--bg-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1.15em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
+}
+
+.calculate-btn:hover {
+    background-color: #1e7e34;
+}
+
+.calculate-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+.result-area {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #e9f5ff;
+    border: 1px solid #cce5ff;
+
+}
+
+.result-area p {
+    margin: 8px 0;
+    font-size: 1em;
+}
+
+.result-value {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.2em;
+}
+
+.final-result-box {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.final-result-box hr {
+    border: 0;
+    border-top: 1px solid #a2d2a2;
+    margin: 15px 0;
+}
+
+/* ปรับปรุง: ทำให้หัวข้อ 'ปริมาณอินซูลินรวม...' ใหญ่และเข้มขึ้นเล็กน้อย */
+.final-result-box .total-dose {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #155724;
+}
+
+/* NEW CONTAINER: ใช้ div ใหม่ในการจัดวาง */
+.final-display {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.final-dose-value {
+    /* ปรับปรุง: ตัวเลขปริมาณอินซูลินรวมให้เล็กลงแต่ยังคงเด่นชัด (6vw) */
+    font-size: 6vw;
+    font-weight: 900;
+    color: var(--secondary-color);
+    display: inline-block;
+    line-height: 1;
+    margin-right: 5px;
+}
+
+.unit-text {
+    /* ปรับปรุง: การจัดวางหน่วย (U) ให้เหมาะสมกับขนาดตัวเลขใหม่ */
+    font-size: 0.5em;
+    font-weight: 600;
+    color: var(--sub-text-color);
+    vertical-align: baseline;
+    line-height: 1;
+    margin-top: 35px; /* ปรับชดเชยให้เข้ากับฟอนต์ที่เล็กลง */
+    display: inline-block;
+}
+
+
+/* ===================================================
+   ACCORDION & FOOD TABLES
+   =================================================== */
+
+#food-selection-tables {
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.accordion-item:last-child {
+    border-bottom: none;
+}
+
+.accordion-header {
+    background-color: var(--bg-white);
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s;
+    font-size: 1.1em;
+    font-weight: 600;
+
+    /* 🟢 NEW: ใช้ Flexbox จัดเรียงเนื้อหาหลักกับไอคอน */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-header:hover {
+    background-color: var(--bg-light);
+}
+
+/* 🟢 NEW CONTAINER: จัดการ ชื่อหมวดหมู่ และ หมายเหตุ */
+.accordion-header .header-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1;
+}
+
+/* 🟢 NEW STYLING: ชื่อหมวดหมู่ */
+.accordion-header .category-name {
+    margin-right: 15px;
+}
+
+/* 🟢 NEW STYLING: จัดการ หมายเหตุ ให้อยู่ชิดขวาของเนื้อหาหลัก */
+.accordion-header .header-note {
+    font-size: 0.85em;
+    color: var(--sub-text-color);
+    font-weight: 400;
+    margin-left: auto; /* ดันหมายเหตุไปขวาของชื่อหมวดหมู่ */
+    text-align: right;
+}
+
+.accordion-header .icon {
+    font-size: 1.5em;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--primary-color);
+    transition: transform 0.3s;
+    margin-left: 10px; /* เว้นระยะจากหมายเหตุ */
+}
+
+.accordion-content {
+    padding: 0 15px;
+    background-color: var(--bg-white);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+/* Table styling (Desktop) */
+.food-table, .selection-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.food-table thead th, .selection-table thead th {
+    background-color: #f0f8ff;
+    color: var(--primary-color);
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 2px solid var(--primary-color);
+    font-size: 0.95em;
+}
+
+.food-table tbody td, .selection-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95em;
+    vertical-align: middle;
+}
+
+.food-table tbody tr:last-child td, .selection-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.food-table .add-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    display: block;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+.food-table .add-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* Selection Table (รายการที่เลือกแล้ว) */
+.selection-table {
+    box-shadow: none;
+    margin-top: 0;
+}
+.selection-table input[type="number"] {
+    width: 80px;
+    padding: 5px;
+    text-align: center;
+    font-size: 0.95em;
+}
+
+.selection-table .remove-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+.selection-table .remove-btn:hover {
+    background-color: #c82333;
+}
+
+.total-carb-box {
+    text-align: right;
+    padding: 18px;
+    background-color: #fff3f3;
+    border-top: 2px solid #dc3545;
+    border-radius: 0 0 10px 10px;
+    margin-top: -15px;
+    font-size: 1.1em;
+}
+.total-carb-box strong {
+    color: var(--text-color);
+}
+.total-carb-box .result-value {
+    color: #dc3545;
+}
+
+.no-selection-msg {
+    text-align: center;
+    color: var(--sub-text-color);
+    padding: 25px;
+    font-style: italic;
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+
+/* ===================================================
+   RESPONSIVE DESIGN (ปรับปรุงเพื่อหน้าจอมือถือและ iPad)
+   =================================================== */
+
+/* Tablet/iPad adjustments */
+@media (max-width: 1024px) {
+    .container {
+        padding: 15px;
+    }
+    .input-grid {
+        gap: 15px;
+    }
+    h1 {
+        font-size: 2.2em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+
+    /* ปรับปรุง: ตัวเลขปริมาณอินซูลินรวมให้เหมาะสมบนแท็บเล็ต/เดสก์ท็อปขนาดเล็ก */
+    .final-dose-value {
+        font-size: 6vw;
+    }
+    .unit-text {
+        margin-top: 35px;
+    }
+
+    /* 🟢 NEW: ปรับขนาดหมายเหตุใน Accordion บนจอขนาดกลาง */
+    .accordion-header .header-note {
+        padding-right: 10px;
+    }
+}
+
+/* Mobile Phone adjustments */
+@media (max-width: 650px) {
+    /* ทั่วไป */
+    .container {
+        padding: 10px;
+    }
+    .card {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    .carb-h3 {
+        font-size: 1.15em;
+    }
+
+    /* การจัดการ Input และ Grid */
+    .input-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .calculate-btn {
+        font-size: 1.05em;
+    }
+
+    /* ----------------------------------------------------
+       การจัดวาง Accordion Header
+       ---------------------------------------------------- */
+    .accordion-header {
+        padding: 12px;
+    }
+
+    /* 🟢 NEW: ซ่อนหมายเหตุเพื่อประหยัดพื้นที่บนมือถือ */
+    .accordion-header .header-note {
+        display: none;
+    }
+
+
+    /* ----------------------------------------------------
+       การจัดการส่วนแสดงผลลัพธ์ (Final Result)
+       ---------------------------------------------------- */
+    .result-area p {
+        font-size: 0.9em;
+    }
+
+    /* ปรับปรุง: ทำให้ตัวเลขปริมาณอินซูลินรวมให้เหมาะสมบนมือถือ (10vw) */
+    .final-dose-value {
+        font-size: 10vw;
+    }
+    .unit-text {
+        vertical-align: baseline;
+        line-height: 1;
+        margin-top: 30px;
+    }
+
+    /* ----------------------------------------------------
+       ตาราง (Card-like Layout) - กฎทั่วไปสำหรับ td
+       ---------------------------------------------------- */
+    .food-table thead, .selection-table thead {
+        display: none;
+    }
+
+    .food-table tr, .selection-table tr {
+        display: block;
+        margin-bottom: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        background-color: var(--bg-white);
+    }
+
+    .food-table td, .selection-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dotted #e0e0e0;
+    }
+
+    .food-table tr td:last-child, .selection-table tr td:last-child {
+        border-bottom: none;
+    }
+
+    /* 🔴 กฎสำหรับ Label (ชื่อคอลัมน์) ในทุกตาราง */
+    .food-table td::before, .selection-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        text-align: left;
+        flex-basis: 40%;
+        flex-shrink: 0;
+        color: var(--sub-text-color);
+        font-size: 0.95em;
+    }
+
+    /* ----------------------------------------------------
+       A. การจัดวางตารางในหมวดหมู่ (.food-table)
+       ---------------------------------------------------- */
+
+    .food-table td div,
+    .food-table td .food-name-cell,
+    .food-table td .add-btn {
+        flex-basis: 60%;
+        text-align: right;
+        justify-content: flex-end;
+        word-break: break-word;
+        font-weight: 500;
+    }
+
+    /* จัดการปุ่มเพิ่มในช่องหมวดหมู่ */
+    .food-table .add-btn {
+        margin-left: auto;
+    }
+
+    /* ซ่อน Label 'เพิ่ม' */
+    .food-table tr td:last-child::before {
+        content: none;
+    }
+
+    /* ----------------------------------------------------
+       B. การจัดวางตารางรายการที่เลือก (.selection-table)
+       ---------------------------------------------------- */
+
+    .selection-table td div,
+    .selection-table td .food-name-cell,
+    .selection-table td input[type="number"] {
+        flex-basis: 60%;
+        text-align: right;
+        justify-content: flex-end;
+        word-break: break-word;
+        font-weight: 500;
+    }
+
+    /* จัดการช่อง Input จำนวน */
+    .selection-table td input[type="number"] {
+        max-width: 80px;
+        padding: 4px;
+        font-size: 0.95em;
+        flex-basis: auto;
+        margin-left: auto;
+    }
+
+    /* จัดการปุ่มลบ (ให้ปุ่มอยู่ด้านขวา) */
+    .selection-table tr td:last-child {
+        justify-content: flex-end;
+    }
+    /* ซ่อน Label "ลบ" ใน td สุดท้าย */
+    .selection-table tr td:last-child::before {
+        content: none;
+    }
+    .selection-table .remove-btn {
+        margin-left: auto;
+    }
+
+    /* ----------------------------------------------------
+       ส่วนอื่นๆ
+       ---------------------------------------------------- */
+    .total-carb-box {
+        padding: 15px;
+        border-radius: 0 0 8px 8px;
+        font-size: 1em;
+    }
+}
