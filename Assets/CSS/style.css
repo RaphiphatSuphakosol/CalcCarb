@@ -13,65 +13,83 @@
     --border-color: #e9ecef;
 }
 html {
-    /* NEW: ตั้งค่าพื้นฐานให้ฟอนต์ปรับขนาดตามจอ */
     font-size: 16px;
 }
 body {
-    font-family: 'Sarabun', sans-serif;
+    font-family: 'Kanit', sans-serif;
     background-color: var(--bg-light);
     color: var(--text-color);
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    /* NEW & IMPROVED: ทำให้ฟอนต์เนื้อหาปรับขนาดอย่างสวยงาม */
     font-size: clamp(1rem, 0.95rem + 0.2vw, 1.1rem);
+    word-break: thai;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    padding-top: 70px;
 }
 .container { max-width: 800px; margin: 30px auto; padding: 20px; }
 header { text-align: center; margin-bottom: 40px; }
 
-/* NEW & IMPROVED: ใช้ clamp() เพื่อให้หัวข้อปรับขนาดลื่นไหล */
-h1 {
-    font-size: clamp(1.8rem, 1.5rem + 2vw, 2.5rem);
-    color: var(--primary-color);
-    font-weight: 700;
-    margin-bottom: 5px;
-    line-height: 1.2;
-}
-h2 {
-    font-size: clamp(1.4rem, 1.2rem + 1.5vw, 1.8rem);
-    color: var(--text-color);
-    border-bottom: 3px solid var(--primary-color);
-    padding-bottom: 10px;
-    margin-bottom: 25px;
-    font-weight: 600;
-}
+h1 { font-size: clamp(1.8rem, 1.5rem + 2vw, 2.5rem); color: var(--primary-color); font-weight: 700; margin-bottom: 5px; line-height: 1.2; }
+h2 { font-size: clamp(1.4rem, 1.2rem + 1.5vw, 1.8rem); color: var(--text-color); border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; font-weight: 600; }
 
 .carb-h3 { font-size: 1.25em; font-weight: 600; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; padding-left: 10px; border-left: 4px solid var(--accent-color); }
 .warning-text { color: #856404; background-color: #fff3cd; padding: 12px; border-radius: 6px; border: 1px solid #ffeeba; font-size: 0.95em; }
 .footer-note { text-align: center; font-size: 0.85em; color: var(--sub-text-color); margin-top: 40px; }
 
 /* ===================================================
-   TOOLTIP STYLES
+   NAVIGATION BAR
+   =================================================== */
+.navbar {
+    background-color: var(--bg-white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+.nav-links {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-link {
+    color: var(--sub-text-color);
+    text-decoration: none;
+    padding: 15px 20px;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+}
+.nav-link:hover {
+    color: var(--primary-color);
+}
+.nav-link.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+/* ===================================================
+   TOOLTIP, CARDS, INPUTS, BUTTONS, RESULTS
    =================================================== */
 .tooltip-container { position: relative; display: inline-block; cursor: pointer; }
 .tooltip-icon { font-size: 0.8em; font-weight: 700; color: var(--bg-white); background-color: var(--sub-text-color); border-radius: 50%; width: 18px; height: 18px; display: inline-flex; justify-content: center; align-items: center; line-height: 1; }
 .tooltip-text { visibility: hidden; width: 220px; background-color: #555; color: #fff; text-align: center; border-radius: 6px; padding: 8px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -110px; opacity: 0; transition: opacity 0.3s; font-size: 0.85em; font-weight: 400; }
 .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
 
-/* ===================================================
-   CARD & INPUT STYLES
-   =================================================== */
 .card { background-color: var(--bg-white); padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); margin-bottom: 30px; }
 .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
 .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--sub-text-color); font-size: 0.95em; }
-input[type="number"], select, input[type="text"] { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
-input[type="number"]:focus, select:focus, input[type="text"]:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); outline: none; }
+input, select { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; font-family: 'Kanit', sans-serif; }
+input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); outline: none; }
 .input-error { border-color: var(--danger-color) !important; box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important; }
 
-/* ===================================================
-   BUTTON & RESULT STYLES
-   =================================================== */
-.calculate-btn { display: block; width: 100%; padding: 15px 20px; background-color: var(--primary-color); color: var(--bg-white); border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background-color 0.3s; }
+.calculate-btn { display: block; width: 100%; padding: 15px 20px; background-color: var(--primary-color); color: var(--bg-white); border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background-color 0.3s; font-family: 'Kanit', sans-serif;}
 .calculate-btn:hover { background-color: #0056b3; }
 .calculate-final-btn { background-color: var(--secondary-color); box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3); }
 .calculate-final-btn:hover { background-color: #1e7e34; }
@@ -83,33 +101,22 @@ input[type="number"]:focus, select:focus, input[type="text"]:focus { border-colo
 .final-result-box hr { border: 0; border-top: 1px solid #a2d2a2; margin: 15px 0; }
 .total-dose { font-size: 1.2em; font-weight: 700; color: #155724; }
 .final-display { margin-top: 5px; }
-
-/* NEW & IMPROVED: ตัวเลขผลลัพธ์สุดท้ายจะปรับขนาดอย่างพอดี */
-.final-dose-value {
-    font-size: clamp(3.5rem, 15vw, 5rem);
-    font-weight: 900;
-    color: var(--secondary-color);
-    line-height: 1;
-}
+.final-dose-value { font-size: clamp(3.5rem, 15vw, 5rem); font-weight: 900; color: var(--secondary-color); line-height: 1; }
 .unit-text { font-size: 1rem; color: var(--sub-text-color); margin-left: 8px; }
+.final-result-box.hypo-warning { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+.hypo-title { font-size: 1.4em; font-weight: 700; }
+.hypo-advice { font-size: 1em; margin-top: 10px; }
+.hypo-advice p { margin-top: 5px; font-size: 0.95em; }
 
 /* ===================================================
-   SAFETY WARNING
-   =================================================== */
-.safety-warning-box { padding: 15px; margin-top: 20px; margin-bottom: 10px; border-radius: 8px; font-weight: 600; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; text-align: center; }
-
-/* ===================================================
-   TABS FOR FOOD SELECTION
+   TABS, ACCORDION & TABLES
    =================================================== */
 .food-tabs { overflow: hidden; border: 1px solid var(--border-color); border-bottom: none; border-radius: 8px 8px 0 0; display: flex; }
-.tab-link { background-color: #f1f1f1; flex-grow: 1; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 0.95em; font-family: 'Sarabun', sans-serif; font-weight: 600; color: var(--sub-text-color); }
+.tab-link { background-color: #f1f1f1; flex-grow: 1; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 0.95em; font-family: 'Kanit', sans-serif; font-weight: 600; color: var(--sub-text-color); }
 .tab-link:hover { background-color: #ddd; }
 .tab-link.active { background-color: var(--bg-white); color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
 .tab-content { display: none; padding: 20px; border: 1px solid var(--border-color); border-top: none; background-color: var(--bg-white); border-radius: 0 0 8px 8px; }
 
-/* ===================================================
-   ACCORDION & FOOD TABLES
-   =================================================== */
 #food-selection-tables { margin: 0; padding: 0; border: none; box-shadow: none; }
 .accordion-item { border-bottom: 1px solid var(--border-color); }
 .accordion-item:last-child { border-bottom: none; }
@@ -119,26 +126,57 @@ input[type="number"]:focus, select:focus, input[type="text"]:focus { border-colo
 .food-table, .selection-table { width: 100%; border-collapse: collapse; margin: 10px 0 15px; }
 .food-table th, .selection-table th { background-color: #f0f8ff; color: var(--primary-color); padding: 12px 10px; text-align: left; font-size: 0.95em; }
 .food-table td, .selection-table td { padding: 10px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
-.add-btn { background-color: var(--secondary-color); color: white; padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em; }
-.selection-table input[type="number"] { width: 70px; padding: 5px; text-align: center; }
-.remove-btn { background-color: var(--danger-color); color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: 700; }
+.selection-table .cell-center { text-align: center; }
+.selection-table .cell-center .servings-input-wrapper { justify-content: center; }
+.add-btn, .remove-btn, .view-image-btn { white-space: nowrap; }
+.add-btn { background-color: var(--secondary-color); color: white; padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-family: 'Kanit', sans-serif; }
+.remove-btn { background-color: var(--danger-color); color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: 700; font-family: 'Kanit', sans-serif; }
+.view-image-btn { background-color: #e9ecef; color: var(--sub-text-color); border: 1px solid #dee2e6; border-radius: 50%; width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; line-height: 1; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+.view-image-btn:hover { transform: scale(1.1); box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+.view-image-btn:active { transform: scale(0.95); }
+.servings-input-wrapper { display: flex; align-items: center; }
+.servings-input-wrapper input { width: 70px; padding: 5px; text-align: center; margin-right: 8px; }
+.unit-label { font-size: 0.9em; color: var(--sub-text-color); }
 .total-carb-box { text-align: right; padding: 18px; background-color: #fff3cd; border-top: 2px solid #ffeeba; border-radius: 0 0 10px 10px; margin-top: -1px; font-size: 1.1em; }
 .no-selection-msg { text-align: center; color: var(--sub-text-color); padding: 25px; font-style: italic; background-color: var(--bg-light); border-radius: 8px; }
-
-/* ===================================================
-   CUSTOM FOOD SECTION
-   =================================================== */
 .custom-food-card { background-color: #f0f8ff; padding: 20px; border-radius: 8px; }
 .custom-food-description { font-size: 0.9em; color: var(--sub-text-color); margin-top: 0; text-align: center; }
 .input-grid-custom { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; align-items: end; }
-.add-custom-btn { background-color: var(--primary-color); color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; width: 100%; margin-top: 15px; }
+.add-custom-btn { background-color: var(--primary-color); color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; width: 100%; margin-top: 15px; font-family: 'Kanit', sans-serif;}
+
+/* ===================================================
+   VIDEO PAGE STYLES
+   =================================================== */
+.video-item { margin-top: 25px; }
+.video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; margin-top: 10px; }
+.video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+/* ===================================================
+   MODAL (POPUP) STYLES
+   =================================================== */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); animation: fadeIn 0.3s; }
+.modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg-white); padding: 20px; border-radius: 10px; max-width: 90%; max-height: 80%; text-align: center; animation: slideIn 0.3s; }
+#modalImage { max-width: 100%; max-height: 70vh; border-radius: 8px; }
+#modalCaption { margin-top: 15px; font-weight: 600; color: var(--text-color); }
+.close-button { position: absolute; top: 10px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+@keyframes slideIn { from {transform: translate(-50%, -70%); opacity: 0;} to {transform: translate(-50%, -50%); opacity: 1;} }
 
 /* ===================================================
    RESPONSIVE DESIGN
    =================================================== */
 @media (max-width: 650px) {
+    body { padding-top: 60px; }
+    .nav-link {
+        padding: 15px 5px;
+        flex-grow: 1;
+        text-align: center;
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
     .container { padding: 15px; }
-    /* REMOVED: การกำหนด font-size แบบตายตัวสำหรับ h1, h2 ถูกลบออก เพราะ clamp() ทำงานได้ดีกว่า */
+    .card, .tab-content { padding: 20px 15px; }
+
     .input-grid, .input-grid-custom { grid-template-columns: 1fr; }
     .food-tabs { flex-direction: column; }
     .tab-link { border-bottom: 1px solid var(--border-color); }
@@ -147,6 +185,7 @@ input[type="number"]:focus, select:focus, input[type="text"]:focus { border-colo
     .food-table tr, .selection-table tr { display: block; margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; }
     .food-table td, .selection-table td { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dotted #e0e0e0; }
     .food-table tr td:last-child, .selection-table tr td:last-child { border-bottom: none; }
-    .food-table td::before, .selection-table td::before { content: attr(data-label); font-weight: 600; flex-basis: 40%; color: var(--sub-text-color); }
-    .selection-table td input[type="number"], .selection-table td .remove-btn { flex-basis: 50%; }
-}
+
+    .food-table td::before, .selection-table td::before {
+        content: attr(data-label);
+        font-weight: 60
