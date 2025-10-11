@@ -3,30 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องช่วยคำนวณอินซูลิน (Bolus)</title>
+    <title>เครื่องช่วยคำนวณอินซูลิน</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="Assets/CSS/style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>💡 เครื่องช่วยคำนวณปริมาณอินซูลิน Bolus</h1>
-            <p class="subtitle">คำนวณอินซูลินที่ต้องฉีดตามคาร์โบไฮเดรตและระดับน้ำตาลที่เกินเป้าหมาย</p>
+            <h1>💡 เครื่องช่วยคำนวณอินซูลิน</h1>
+            <p class="subtitle">สำหรับอินซูลินชนิดออกฤทธิ์เร็ว (Bolus) ที่ใช้ในมื้ออาหาร</p>
         </header>
 
         <section id="settings" class="card primary-card">
-            <h2>1. ข้อมูลเริ่มต้นของคุณ</h2>
-            <p class="warning-text">⚠️ **สำคัญ:** ค่าเหล่านี้ควรได้รับคำแนะนำจากทีมแพทย์ผู้ดูแลของคุณเท่านั้น</p>
+            <h2>ขั้นตอนที่ 1: ตั้งค่าข้อมูลส่วนตัวของคุณ</h2>
+            <p class="warning-text">⚠️ **สำคัญ:** ค่าเหล่านี้ต้องมาจากคำแนะนำของแพทย์หรือทีมผู้รักษาเท่านั้น</p>
 
             <div class="input-grid">
                 <div class="input-group">
-                    <label for="weight">น้ำหนักตัว (เป็นกิโลกรัม):</label>
+                    <label for="weight">น้ำหนักตัว (กิโลกรัม):</label>
                     <input type="number" id="weight" value="60" min="10" step="1">
                 </div>
-
                 <div class="input-group">
-                    <label for="age-group">ช่วงวัย (เพื่อกำหนดค่าเริ่มต้น):</label>
+                    <label for="age-group">ปริมาณอินซูลินเริ่มต้น:</label>
                     <select id="age-group">
                         <option value="0.5" selected>ผู้ใหญ่ (0.5 U/kg/วัน)</option>
                         <option value="0.5">เด็กเล็ก (0.5 U/kg/วัน)</option>
@@ -38,85 +36,122 @@
 
             <div class="input-grid">
                  <div class="input-group">
-                    <label for="insulin-type">สูตรความไวต่ออินซูลิน (ISF):</label>
+                    <label for="insulin-type">ชนิดของอินซูลินที่ใช้:</label>
                     <select id="insulin-type">
-                        <option value="1800" selected>สูตร 1800 (สำหรับอินซูลิน Aspart)</option>
-                        <option value="1500">สูตร 1500 (สำหรับอินซูลิน RI)</option>
+                        <option value="1800" selected>Aspart (Novorapid, Fiasp)</option>
+                        <option value="1500">RI (Actrapid)</option>
                     </select>
                 </div>
-
                 <div class="input-group">
-                    <label for="tbg">ระดับน้ำตาลในเลือดที่คุณต้องการ (TBG, mg/dL):</label>
+                    <label for="tbg">ระดับน้ำตาลเป้าหมาย (mg/dL):</label>
                     <input type="number" id="tbg" value="120" min="70" step="1">
                 </div>
             </div>
 
-            <button class="calculate-btn" onclick="calculatePersonalFactors()">คำนวณค่าส่วนตัว (ICR และ ISF)</button>
+            <button class="calculate-btn" onclick="calculatePersonalFactors()">คำนวณค่าเฉพาะตัว</button>
 
-            <div id="factors-display" class="result-area factor-area">
-                <p>ปริมาณอินซูลินรวมต่อวัน (TDD): <span id="tdd-value" class="result-value">...</span> ยูนิต</p>
-                <p>อัตราส่วนคาร์บต่ออินซูลิน (ICR): 1 ยูนิต คลุมคาร์บได้ <span id="icr-value" class="result-value">...</span> กรัม</p>
-                <p>ความไวต่ออินซูลิน (ISF): 1 ยูนิต ลดน้ำตาลได้ <span id="isf-value" class="result-value">...</span> mg/dL</p>
+            <div id="factors-display" class="result-area factor-area" style="display: none;">
+                 <p>
+                    ปริมาณอินซูลินรวมต่อวัน (TDD):
+                    <span class="tooltip-container">
+                        <span class="tooltip-icon">(?)</span>
+                        <span class="tooltip-text">Total Daily Dose คือปริมาณอินซูลินทั้งหมดโดยประมาณที่คุณต้องการใน 1 วัน</span>
+                    </span>
+                    <span id="tdd-value" class="result-value">...</span> ยูนิต
+                </p>
+                <p>
+                    สัดส่วนคาร์บต่ออินซูลิน (ICR):
+                     <span class="tooltip-container">
+                        <span class="tooltip-icon">(?)</span>
+                        <span class="tooltip-text">อินซูลิน 1 ยูนิต จะคุมคาร์โบไฮเดรตได้กี่กรัม (ยิ่งน้อยยิ่งไว)</span>
+                    </span>
+                    1 ยูนิต ต่อ <span id="icr-value" class="result-value">...</span> กรัมคาร์บ
+                </p>
+                <p>
+                    ค่าความไวต่ออินซูลิน (ISF):
+                    <span class="tooltip-container">
+                        <span class="tooltip-icon">(?)</span>
+                        <span class="tooltip-text">อินซูลิน 1 ยูนิต จะลดระดับน้ำตาลได้กี่ mg/dL (ยิ่งมากยิ่งไว)</span>
+                    </span>
+                    1 ยูนิต ลดน้ำตาลได้ <span id="isf-value" class="result-value">...</span> mg/dL
+                </p>
             </div>
         </section>
 
         <section id="meal-calculation" class="card secondary-card" style="display:none;">
-            <h2>2. ข้อมูลการฉีดมื้อนี้</h2>
+            <h2>ขั้นตอนที่ 2: คำนวณสำหรับมื้อนี้</h2>
 
             <div class="input-group wide-input">
-                <label for="cbg">ระดับน้ำตาลในเลือดปัจจุบัน (CBG, mg/dL):</label>
-                <input type="number" id="cbg" value="250" min="40" step="1">
+                <label for="cbg">ระดับน้ำตาลปัจจุบัน (เจาะเลือดปลายนิ้ว, mg/dL):</label>
+                <input type="number" id="cbg" placeholder="เช่น 180" min="20" step="1">
             </div>
 
-            <h3 class="carb-h3 search-h3">3.1 เลือกเมนูอาหารจากหมวดหมู่</h3>
+            <div id="safety-warning" class="safety-warning-box" style="display: none;"></div>
 
-            <div id="food-selection-tables">
+            <h3 class="carb-h3">3. เพิ่มรายการอาหารในมื้อนี้</h3>
+
+            <div class="food-tabs">
+                <button class="tab-link active" onclick="openTab(event, 'SearchTab')">🔍 ค้นหา</button>
+                <button class="tab-link" onclick="openTab(event, 'CategoryTab')">📚 เลือกจากหมวดหมู่</button>
+                <button class="tab-link" onclick="openTab(event, 'CustomTab')">✍️ เพิ่มรายการเอง</button>
+            </div>
+
+            <div id="SearchTab" class="tab-content" style="display: block;">
+                <div class="input-group search-group">
+                     <label for="food-search">พิมพ์ชื่ออาหารเพื่อค้นหา:</label>
+                     <input type="text" id="food-search" list="food-options" placeholder="เช่น ข้าวสวย, กล้วยหอม" onchange="addFoodByDatalist(this)">
+                     <datalist id="food-options"></datalist>
                 </div>
-
-            <h3 class="carb-h3 search-h3">3.2 ค้นหาเมนูอาหาร (ดรอปดาวน์)</h3>
-
-            <div class="input-group search-group">
-                 <label for="food-search">พิมพ์ชื่ออาหารเพื่อค้นหา:</label>
-                 <input type="text"
-                        id="food-search"
-                        list="food-options"
-                        placeholder="พิมพ์ เช่น ข้าวสวย, กล้วยหอม"
-                        oninput="filterFoodList()"
-                        onchange="addFoodByDatalist(this)">
-
-                 <datalist id="food-options">
-                     </datalist>
             </div>
 
-            <h3 class="carb-h3 selected-h3">3.3 รายการอาหารที่คุณเลือกและปริมาณที่ทาน</h3>
+            <div id="CategoryTab" class="tab-content">
+                <div id="food-selection-tables"></div>
+            </div>
 
+            <div id="CustomTab" class="tab-content">
+                <div id="custom-food-entry" class="custom-food-card">
+                    <p class="custom-food-description">สำหรับอาหารที่ไม่มีในรายการ หรืออาหารที่มีฉลากโภชนาการ</p>
+                    <div class="input-grid-custom">
+                        <div class="input-group">
+                            <label for="custom-food-name">ชื่ออาหาร:</label>
+                            <input type="text" id="custom-food-name" placeholder="เช่น ขนมปังโฮลวีท">
+                        </div>
+                        <div class="input-group">
+                            <label for="custom-food-carbs">คาร์โบไฮเดรต (กรัม):</label>
+                            <input type="number" id="custom-food-carbs" placeholder="45">
+                        </div>
+                    </div>
+                    <button class="add-custom-btn" onclick="addCustomFood()">เพิ่มอาหารนี้ในรายการ</button>
+                </div>
+            </div>
+
+            <h3 class="carb-h3 selected-h3">รายการอาหารที่คุณเลือก</h3>
             <div id="selected-food-list-container">
                 <div id="selected-food-list">
-                    <p class="no-selection-msg">ยังไม่ได้เลือกอาหาร โปรดเลือกจากตารางด้านบน</p>
+                    <p class="no-selection-msg">ยังไม่ได้เลือกอาหาร</p>
                 </div>
             </div>
 
             <div class="total-carb-box">
-                <p><strong>รวมคาร์โบไฮเดรตในมื้อนี้:</strong> <span id="total-carb-value" class="result-value">0</span> กรัม</p>
+                <p><strong>รวมคาร์โบไฮเดรตทั้งหมด:</strong> <span id="total-carb-value" class="result-value">0</span> กรัม</p>
             </div>
 
-            <button class="calculate-btn calculate-final-btn" onclick="calculateBolus()">คำนวณปริมาณอินซูลินที่ต้องฉีด</button>
+            <button class="calculate-btn calculate-final-btn" onclick="calculateBolus()">คำนวณอินซูลินที่ต้องฉีด</button>
 
-            <div id="bolus-results" class="result-area final-result-box">
-                <p>ส่วนที่ 1: อินซูลินสำหรับอาหาร (Carb Bolus): <span id="carb-bolus-value" class="result-value">0.0</span> ยูนิต</p>
-                <p>ส่วนที่ 2: อินซูลินแก้ไขน้ำตาลสูง (Correction Bolus): <span id="correction-bolus-value" class="result-value">0.0</span> ยูนิต</p>
+            <div id="bolus-results" class="result-area final-result-box" style="display: none;">
+                <p>ส่วนที่ 1: อินซูลินสำหรับคุมอาหาร (Carb Bolus): <span id="carb-bolus-value" class="result-value">0.0</span> ยูนิต</p>
+                <p>ส่วนที่ 2: อินซูลินสำหรับแก้ไขน้ำตาลสูง (Correction Bolus): <span id="correction-bolus-value" class="result-value">0.0</span> ยูนิต</p>
                 <hr>
-                <div class="total-dose">ปริมาณอินซูลินรวมที่คุณต้องฉีด:</div>
+                <div class="total-dose">สรุปแล้ว มื้อนี้คุณต้องฉีด:</div>
                 <div class="final-display">
                     <span class="final-dose-value" id="total-bolus-value">0.0</span>
-                    <span class="unit-text">ยูนิต (U)</span>
+                    <span class="unit-text">ยูนิต</span>
                 </div>
             </div>
         </section>
 
-        <p class="footer-note">**ข้อสงวนสิทธิ์: เครื่องมือนี้ใช้เพื่อช่วยในการตัดสินใจเบื้องต้นและเพื่อการศึกษาเท่านั้น โปรดปรึกษาแพทย์ผู้เชี่ยวชาญก่อนการฉีดอินซูลินจริงทุกครั้ง**</p>
+        <p class="footer-note">**คำเตือน:** เครื่องมือนี้เป็นเพียงตัวช่วยเบื้องต้น โปรดปรึกษาแพทย์ก่อนปรับเปลี่ยนการฉีดอินซูลินทุกครั้ง การคำนวณผิดพลาดอาจเป็นอันตรายได้</p>
     </div>
-
     <script src="Assets/JS/script.js"></script>
 </body>
 </html>
