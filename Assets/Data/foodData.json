@@ -3,7 +3,7 @@
         "carbPerUnitBase": 18,
         "mode": "CarbUnit",
         "items": [
-            { "name": "ข้าวซ้อมมือ (สวย) / ข้าวขาว (สวย)", "baseUnits": 1, "unit": "1 ทัพพี หรือ 1/3 ถ้วยตวง" },
+            { "name": "ข้าวซ้อมมือ (สวย) / ข้าวขาว (สวย)", "baseUnits": 1, "unit": "1 ทัพพี หรือ 1/3 ถ้วยตวง", "imageUrl": "Assets/Images/image_826aaa.jpg", "caption": "ตัวอย่างข้าวสวย 1 ทัพพี หรือ 1/3 ถ้วยตวง" },
             { "name": "ข้าวเหนียว", "baseUnits": 1, "unit": "1/2 ทัพพี หรือ 1/4 ถ้วยตวง" },
             { "name": "ข้าวต้ม", "baseUnits": 1, "unit": "2 ทัพพี หรือ 3/4 ถ้วยตวง" },
             { "name": "โจ๊ก", "baseUnits": 1, "unit": "2 ทัพพี หรือ 1/2 ถ้วยตวง" },

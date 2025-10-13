@@ -11,10 +11,19 @@
     --bg-light: #f8f9fa;
     --bg-white: #ffffff;
     --border-color: #e9ecef;
+    --shadow-color: rgba(0, 0, 0, 0.08);
 }
-html {
-    font-size: 16px;
+
+body.dark-mode {
+    --text-color: #e9ecef;
+    --sub-text-color: #adb5bd;
+    --bg-light: #121212;
+    --bg-white: #1e1e1e;
+    --border-color: #495057;
+    --shadow-color: rgba(255, 255, 255, 0.05);
 }
+
+html { font-size: 16px; scroll-behavior: smooth; }
 body {
     font-family: 'Kanit', sans-serif;
     background-color: var(--bg-light);
@@ -24,10 +33,9 @@ body {
     line-height: 1.6;
     font-size: clamp(1rem, 0.95rem + 0.2vw, 1.1rem);
     word-break: thai;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
+    -webkit-hyphens: auto; -ms-hyphens: auto; hyphens: auto;
     padding-top: 70px;
+    transition: background-color 0.3s, color 0.3s;
 }
 .container { max-width: 800px; margin: 30px auto; padding: 20px; }
 header { text-align: center; margin-bottom: 40px; }
@@ -40,63 +48,87 @@ h2 { font-size: clamp(1.4rem, 1.2rem + 1.5vw, 1.8rem); color: var(--text-color);
 .footer-note { text-align: center; font-size: 0.85em; color: var(--sub-text-color); margin-top: 40px; }
 
 /* ===================================================
-   NAVIGATION BAR
+   NAVIGATION BAR & THEME TOGGLE
    =================================================== */
-.navbar {
-    background-color: var(--bg-white);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-}
-.nav-links {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.nav-link {
-    color: var(--sub-text-color);
-    text-decoration: none;
-    padding: 15px 20px;
-    font-weight: 600;
-    border-bottom: 3px solid transparent;
-    transition: color 0.3s, border-color 0.3s;
-}
-.nav-link:hover {
-    color: var(--primary-color);
-}
-.nav-link.active {
-    color: var(--primary-color);
-    border-bottom-color: var(--primary-color);
+.navbar { background-color: var(--bg-white); box-shadow: 0 2px 5px var(--shadow-color); position: fixed; top: 0; left: 0; width: 100%; z-index: 999; }
+.nav-container { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.nav-links { display: flex; justify-content: center; align-items: center; flex-grow: 1; }
+.nav-link { color: var(--sub-text-color); text-decoration: none; padding: 15px 15px; font-weight: 600; border-bottom: 3px solid transparent; transition: color 0.3s, border-color 0.3s; white-space: nowrap; }
+.nav-link:hover { color: var(--primary-color); }
+.nav-link.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+.theme-toggle-btn {
+    background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);
+    padding: 0 20px; width: auto;
 }
 
 /* ===================================================
    TOOLTIP, CARDS, INPUTS, BUTTONS, RESULTS
    =================================================== */
-.tooltip-container { position: relative; display: inline-block; cursor: pointer; }
-.tooltip-icon { font-size: 0.8em; font-weight: 700; color: var(--bg-white); background-color: var(--sub-text-color); border-radius: 50%; width: 18px; height: 18px; display: inline-flex; justify-content: center; align-items: center; line-height: 1; }
-.tooltip-text { visibility: hidden; width: 220px; background-color: #555; color: #fff; text-align: center; border-radius: 6px; padding: 8px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -110px; opacity: 0; transition: opacity 0.3s; font-size: 0.85em; font-weight: 400; }
+.tooltip-container { position: relative; display: inline-block; cursor: pointer; vertical-align: super; font-size: 0.7em; margin: 0 2px; }
+.tooltip-icon { font-weight: 700; color: var(--sub-text-color); border: 1.5px solid var(--sub-text-color); border-radius: 50%; width: 1.4em; height: 1.4em; display: inline-flex; justify-content: center; align-items: center; line-height: 1; transition: background-color 0.2s, color 0.2s; }
+.tooltip-container:hover .tooltip-icon { background-color: var(--sub-text-color); color: var(--bg-white); }
+.tooltip-text { visibility: hidden; width: 220px; background-color: #555; color: #fff; text-align: center; border-radius: 6px; padding: 8px; position: absolute; z-index: 1; bottom: 150%; left: 50%; margin-left: -110px; opacity: 0; transition: opacity 0.3s; font-size: 1.2rem; font-weight: 400; }
 .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
 
-.card { background-color: var(--bg-white); padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); margin-bottom: 30px; }
+.card { background-color: var(--bg-white); padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow-color); margin-bottom: 30px; }
 .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
 .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--sub-text-color); font-size: 0.95em; }
-input, select { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; font-family: 'Kanit', sans-serif; }
-input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); outline: none; }
+
+input, select, button { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s; font-family: 'Kanit', sans-serif; background-color: var(--bg-white); color: var(--text-color); }
+input:focus, select:focus, button:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); outline: none; }
 .input-error { border-color: var(--danger-color) !important; box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important; }
 
-.calculate-btn { display: block; width: 100%; padding: 15px 20px; background-color: var(--primary-color); color: var(--bg-white); border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background-color 0.3s; font-family: 'Kanit', sans-serif;}
+.calculate-btn { display: block; width: 100%; padding: 15px 20px; background-color: var(--primary-color); color: var(--bg-white); border: none; font-size: 1.1rem; font-weight: 700; cursor: pointer; }
 .calculate-btn:hover { background-color: #0056b3; }
-.calculate-final-btn { background-color: var(--secondary-color); box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3); }
+.action-buttons { display: flex; gap: 15px; margin-top: 20px; }
+.calculate-final-btn { background-color: var(--secondary-color); box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3); flex-grow: 3; }
 .calculate-final-btn:hover { background-color: #1e7e34; }
-.result-area { margin-top: 30px; padding: 20px; border-radius: 10px; }
-.factor-area { background-color: #e9f5ff; border: 1px solid #cce5ff; }
-.result-area p { margin: 8px 0; font-size: 1em; }
+.clear-btn { background-color: transparent; color: var(--danger-color); border: 2px solid var(--danger-color); font-weight: 700; flex-grow: 1; }
+.clear-btn:hover { background-color: var(--danger-color); color: var(--bg-white); }
+.clear-btn.small-btn { flex-grow: 0; width: auto; padding: 8px 15px; font-size: 0.9rem; }
+
+/* ===== ⬇️⬇️ โค้ดส่วนแสดงผลลัพธ์ที่แก้ไขใหม่ทั้งหมด ⬇️⬇️ ===== */
+.result-area {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+}
+.factor-area {
+    background-color: #e9f5ff;
+    border: 1px solid #cce5ff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.factor-item {
+    margin-bottom: 16px;
+}
+.factor-item:last-child {
+    margin-bottom: 0;
+}
+.factor-label {
+    display: block;
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--sub-text-color);
+    margin-bottom: 8px;
+}
+.factor-value-wrapper {
+    display: inline-block;
+    background-color: var(--bg-white);
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    min-height: 24px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+body.dark-mode .factor-area {
+    background-color: #1c2a44;
+    border-color: #2a3f68;
+}
+/* ===== ⬆️⬆️ สิ้นสุดส่วนที่แก้ไข ⬆️⬆️ ===== */
+
 .result-value { font-weight: 700; color: var(--primary-color); font-size: 1.15em; }
+
 .final-result-box { background-color: #d4edda; border-color: #c3e6cb; text-align: center; }
 .final-result-box hr { border: 0; border-top: 1px solid #a2d2a2; margin: 15px 0; }
 .total-dose { font-size: 1.2em; font-weight: 700; color: #155724; }
@@ -112,44 +144,83 @@ input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 
    TABS, ACCORDION & TABLES
    =================================================== */
 .food-tabs { overflow: hidden; border: 1px solid var(--border-color); border-bottom: none; border-radius: 8px 8px 0 0; display: flex; }
-.tab-link { background-color: #f1f1f1; flex-grow: 1; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 0.95em; font-family: 'Kanit', sans-serif; font-weight: 600; color: var(--sub-text-color); }
-.tab-link:hover { background-color: #ddd; }
+.tab-link { background-color: var(--bg-light); flex-grow: 1; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 0.95em; font-weight: 600; color: var(--sub-text-color); border-radius: 0; }
+.tab-link:hover { background-color: var(--border-color); }
 .tab-link.active { background-color: var(--bg-white); color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
 .tab-content { display: none; padding: 20px; border: 1px solid var(--border-color); border-top: none; background-color: var(--bg-white); border-radius: 0 0 8px 8px; }
 
-#food-selection-tables { margin: 0; padding: 0; border: none; box-shadow: none; }
+#food-selection-tables, #search-results-container, #favorite-search-display { margin: 0; padding: 0; border: none; box-shadow: none; }
+#favorite-search-display { margin-top: 20px; }
 .accordion-item { border-bottom: 1px solid var(--border-color); }
 .accordion-item:last-child { border-bottom: none; }
-.accordion-header { background-color: var(--bg-white); cursor: pointer; padding: 15px; width: 100%; text-align: left; border: none; outline: none; transition: background-color 0.3s; font-size: 1.1em; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-.accordion-header:hover { background-color: #f7f7f7; }
+.accordion-header { background-color: var(--bg-white); cursor: pointer; padding: 15px; width: 100%; text-align: left; border: none; font-size: 1.1em; font-weight: 600; display: flex; justify-content: space-between; align-items: center; border-radius: 0; }
+.accordion-header:hover { background-color: var(--bg-light); }
 .accordion-content { padding: 0 15px; background-color: var(--bg-white); max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
 .food-table, .selection-table { width: 100%; border-collapse: collapse; margin: 10px 0 15px; }
-.food-table th, .selection-table th { background-color: #f0f8ff; color: var(--primary-color); padding: 12px 10px; text-align: left; font-size: 0.95em; }
+.food-table th, .selection-table th { background-color: #e9f5ff; color: var(--primary-color); padding: 12px 10px; text-align: left; font-size: 0.95em; }
 .food-table td, .selection-table td { padding: 10px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
 .selection-table .cell-center { text-align: center; }
 .selection-table .cell-center .servings-input-wrapper { justify-content: center; }
-.add-btn, .remove-btn, .view-image-btn { white-space: nowrap; }
-.add-btn { background-color: var(--secondary-color); color: white; padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-family: 'Kanit', sans-serif; }
-.remove-btn { background-color: var(--danger-color); color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: 700; font-family: 'Kanit', sans-serif; }
-.view-image-btn { background-color: #e9ecef; color: var(--sub-text-color); border: 1px solid #dee2e6; border-radius: 50%; width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; line-height: 1; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+.cell-right { text-align: right !important; }
+
+.food-table th.cell-right {
+    padding-right: 25px;
+}
+
+.add-btn, .remove-btn, .view-image-btn, .fav-btn { white-space: nowrap; }
+.add-btn { background-color: var(--secondary-color); color: white; padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em; width: auto; }
+.remove-btn { background-color: var(--danger-color); color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: 700; width: auto; }
+.view-image-btn { background-color: #e9ecef; color: var(--sub-text-color); border: 1px solid #dee2e6; border-radius: 50%; width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; line-height: 1; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.1); padding: 0; }
 .view-image-btn:hover { transform: scale(1.1); box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
 .view-image-btn:active { transform: scale(0.95); }
+.add-controls { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+
+.fav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 8px;
+    line-height: 1;
+    width: auto;
+}
+.fav-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--sub-text-color);
+    stroke-width: 1.5;
+    fill: none;
+    transition: all 0.2s ease-in-out;
+}
+.fav-btn:hover svg {
+    stroke: var(--accent-color);
+}
+.fav-btn.favorited svg {
+    fill: var(--accent-color);
+    stroke: var(--accent-color);
+    transform: scale(1.1);
+}
+
 .servings-input-wrapper { display: flex; align-items: center; }
 .servings-input-wrapper input { width: 70px; padding: 5px; text-align: center; margin-right: 8px; }
 .unit-label { font-size: 0.9em; color: var(--sub-text-color); }
 .total-carb-box { text-align: right; padding: 18px; background-color: #fff3cd; border-top: 2px solid #ffeeba; border-radius: 0 0 10px 10px; margin-top: -1px; font-size: 1.1em; }
 .no-selection-msg { text-align: center; color: var(--sub-text-color); padding: 25px; font-style: italic; background-color: var(--bg-light); border-radius: 8px; }
-.custom-food-card { background-color: #f0f8ff; padding: 20px; border-radius: 8px; }
+.custom-food-card { background-color: #e9f5ff; padding: 20px; border-radius: 8px; }
 .custom-food-description { font-size: 0.9em; color: var(--sub-text-color); margin-top: 0; text-align: center; }
 .input-grid-custom { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; align-items: end; }
-.add-custom-btn { background-color: var(--primary-color); color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; width: 100%; margin-top: 15px; font-family: 'Kanit', sans-serif;}
+.add-custom-btn { background-color: var(--primary-color); color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; width: 100%; margin-top: 15px; }
 
 /* ===================================================
-   VIDEO PAGE STYLES
+   VIDEO & HISTORY PAGE STYLES
    =================================================== */
 .video-item { margin-top: 25px; }
 .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; margin-top: 10px; }
 .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.history-header { display: flex; justify-content: space-between; align-items: center; }
+.history-item { padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 15px; background-color: var(--bg-white); }
+.history-item p { margin: 5px 0; }
+.history-date { font-size: 0.9em; color: var(--sub-text-color); }
+.history-main-value { font-size: 1.2em; color: var(--primary-color); font-weight: 700; }
 
 /* ===================================================
    MODAL (POPUP) STYLES
@@ -166,26 +237,81 @@ input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 
    RESPONSIVE DESIGN
    =================================================== */
 @media (max-width: 650px) {
+    /* --- การปรับปรุงทั่วไป --- */
     body { padding-top: 60px; }
     .nav-link {
         padding: 15px 5px;
         flex-grow: 1;
         text-align: center;
-        font-size: 0.9rem;
-        white-space: nowrap;
+        font-size: 0.85rem;
     }
+    .theme-toggle-btn { padding: 0 10px; }
     .container { padding: 15px; }
     .card, .tab-content { padding: 20px 15px; }
+    header { margin-bottom: 30px; }
+    h1 { font-size: 1.9rem; }
 
-    .input-grid, .input-grid-custom { grid-template-columns: 1fr; }
-    .food-tabs { flex-direction: column; }
-    .tab-link { border-bottom: 1px solid var(--border-color); }
-    .tab-link.active { border-bottom: 1px solid var(--border-color); }
+    /* --- ปรับปรุงฟอร์มให้กระชับ --- */
+    .input-grid, .input-grid-custom {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* --- ปรับปรุงแท็บให้สวยงามด้วย Flexbox --- */
+    .food-tabs {
+        display: flex;
+        gap: 8px;
+        border: none;
+        overflow: visible;
+    }
+    .tab-link {
+        flex: 1;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 12px 5px;
+    }
+    .tab-link.active {
+        background-color: var(--primary-color);
+        color: var(--bg-white);
+        border-color: var(--primary-color);
+    }
+
+    /* --- ลบโค้ด CSS สำหรับ .factor-area ในมือถือของเดิมออกแล้ว --- */
+    /* ไม่จำเป็นต้องมีสไตล์แยกสำหรับส่วนนี้อีกต่อไป */
+
+    /* --- ปรับปรุงการแสดงผลตารางให้อ่านง่ายและสมมาตร --- */
     .food-table thead, .selection-table thead { display: none; }
-    .food-table tr, .selection-table tr { display: block; margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; }
-    .food-table td, .selection-table td { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dotted #e0e0e0; }
+    .food-table tr, .selection-table tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 10px 15px;
+    }
+    .food-table td, .selection-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px dotted var(--border-color);
+    }
     .food-table tr td:last-child, .selection-table tr td:last-child { border-bottom: none; }
 
     .food-table td::before, .selection-table td::before {
         content: attr(data-label);
-        font-weight: 60
+        font-weight: 600;
+        flex-basis: 45%;
+        color: var(--text-color);
+        opacity: 0.8;
+        padding-right: 10px;
+        text-align: left !important;
+    }
+
+    .selection-table .cell-content {
+        flex-basis: 55%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}

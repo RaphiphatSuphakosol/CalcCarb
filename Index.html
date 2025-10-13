@@ -10,10 +10,14 @@
 <body>
 
     <nav class="navbar">
-        <div class="nav-links">
-            <a href="#" class="nav-link active" onclick="showPage('calculatorPage', this)">🧮 คำนวณ</a>
-            <a href="#" class="nav-link" onclick="showPage('videosPage', this)">🎬 วิดีโอ</a>
-            <a href="#" class="nav-link" onclick="showPage('creditsPage', this)">ℹ️ เกี่ยวกับ</a>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showPage('calculatorPage', this)">🧮 คำนวณ</a>
+                <a href="#" class="nav-link" onclick="showPage('videosPage', this)">🎬 วิดีโอ</a>
+                <a href="#" class="nav-link" onclick="showPage('historyPage', this)">📜 ประวัติ</a>
+                <a href="#" class="nav-link" onclick="showPage('creditsPage', this)">ℹ️ เกี่ยวกับ</a>
+            </div>
+            <button id="theme-toggle" class="theme-toggle-btn">☀️</button>
         </div>
     </nav>
 
@@ -58,35 +62,44 @@
                     </div>
                 </div>
 
-                <button class="calculate-btn" onclick="calculatePersonalFactors()">คำนวณค่าเฉพาะตัว</button>
+                <button class="calculate-btn" onclick="calculatePersonalFactors()">คำนวณและบันทึกค่าเฉพาะตัว</button>
 
                 <div id="factors-display" class="result-area factor-area" style="display: none;">
-                     <p>
-                        ปริมาณอินซูลินรวมต่อวัน (TDD):
-                        <span class="tooltip-container">
-                            <span class="tooltip-icon">(?)</span>
-                            <span class="tooltip-text">Total Daily Dose คือปริมาณอินซูลินทั้งหมดโดยประมาณที่คุณต้องการใน 1 วัน</span>
+
+                    <div class="factor-item">
+                        <span class="factor-label">
+                            ปริมาณอินซูลินรวมต่อวัน (TDD)
+                            <span class="tooltip-container">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">Total Daily Dose คือปริมาณอินซูลินทั้งหมดโดยประมาณที่คุณต้องการใน 1 วัน</span>
+                            </span>
                         </span>
-                        <span id="tdd-value" class="result-value">...</span> ยูนิต
-                    </p>
-                    <p>
-                        สัดส่วนคาร์บต่ออินซูลิน (ICR):
-                         <span class="tooltip-container">
-                            <span class="tooltip-icon">(?)</span>
-                            <span class="tooltip-text">อินซูลิน 1 ยูนิต จะคุมคาร์โบไฮเดรตได้กี่กรัม (ยิ่งน้อยยิ่งไว)</span>
+                        <span class="factor-value-wrapper" id="tdd-wrapper"></span>
+                    </div>
+
+                    <div class="factor-item">
+                        <span class="factor-label">
+                            สัดส่วนคาร์บต่ออินซูลิน (ICR)
+                             <span class="tooltip-container">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">อินซูลิน 1 ยูนิต จะคุมคาร์โบไฮเดรตได้กี่กรัม (ยิ่งน้อยยิ่งไว)</span>
+                            </span>
                         </span>
-                        1 ยูนิต ต่อ <span id="icr-value" class="result-value">...</span> กรัมคาร์บ
-                    </p>
-                    <p>
-                        ค่าความไวต่ออินซูลิน (ISF):
-                        <span class="tooltip-container">
-                            <span class="tooltip-icon">(?)</span>
-                            <span class="tooltip-text">อินซูลิน 1 ยูนิต จะลดระดับน้ำตาลได้กี่ mg/dL (ยิ่งมากยิ่งไว)</span>
+                        <span class="factor-value-wrapper" id="icr-wrapper"></span>
+                    </div>
+
+                    <div class="factor-item">
+                        <span class="factor-label">
+                            ค่าความไวต่ออินซูลิน (ISF)
+                            <span class="tooltip-container">
+                                <span class="tooltip-icon">?</span>
+                                <span class="tooltip-text">อินซูลิน 1 ยูนิต จะลดระดับน้ำตาลได้กี่ mg/dL (ยิ่งมากยิ่งไว)</span>
+                            </span>
                         </span>
-                        1 ยูนิต ลดน้ำตาลได้ <span id="isf-value" class="result-value">...</span> mg/dL
-                    </p>
+                        <span class="factor-value-wrapper" id="isf-wrapper"></span>
+                    </div>
                 </div>
-            </section>
+                </section>
 
             <section id="meal-calculation" class="card secondary-card" style="display:none;">
                 <h2>ขั้นตอนที่ 2: คำนวณสำหรับมื้อนี้</h2>
@@ -100,16 +113,17 @@
 
                 <div class="food-tabs">
                     <button class="tab-link active" onclick="openTab(event, 'SearchTab')">🔍 ค้นหา</button>
-                    <button class="tab-link" onclick="openTab(event, 'CategoryTab')">📚 เลือกจากหมวดหมู่</button>
-                    <button class="tab-link" onclick="openTab(event, 'CustomTab')">✍️ เพิ่มรายการเอง</button>
+                    <button class="tab-link" onclick="openTab(event, 'CategoryTab')">📚 หมวดหมู่</button>
+                    <button class="tab-link" onclick="openTab(event, 'CustomTab')">✍️ เพิ่มเอง</button>
                 </div>
 
                 <div id="SearchTab" class="tab-content" style="display: block;">
                     <div class="input-group search-group">
                          <label for="food-search">พิมพ์ชื่ออาหารเพื่อค้นหา:</label>
-                         <input type="text" id="food-search" list="food-options" placeholder="เช่น ข้าวสวย, กล้วยหอม" onchange="addFoodByDatalist(this)">
-                         <datalist id="food-options"></datalist>
+                         <input type="text" id="food-search" placeholder="เช่น ข้าวสวย, กล้วยหอม">
                     </div>
+                    <div id="favorite-search-display"></div>
+                    <div id="search-results-container" style="display: none;"></div>
                 </div>
 
                 <div id="CategoryTab" class="tab-content">
@@ -144,7 +158,10 @@
                     <p><strong>รวมคาร์โบไฮเดรตทั้งหมด:</strong> <span id="total-carb-value" class="result-value">0</span> กรัม</p>
                 </div>
 
-                <button class="calculate-btn calculate-final-btn" onclick="calculateBolus()">คำนวณอินซูลินที่ต้องฉีด</button>
+                <div class="action-buttons">
+                    <button class="clear-btn" onclick="clearMeal()">ล้างค่า</button>
+                    <button class="calculate-btn calculate-final-btn" onclick="calculateBolus()">คำนวณอินซูลิน</button>
+                </div>
 
                 <div id="bolus-results" class="result-area final-result-box" style="display: none;">
                     </div>
@@ -166,20 +183,31 @@
             </section>
         </main>
 
+        <main id="historyPage" class="main-page" style="display: none;">
+            <section class="card">
+                <div class="history-header">
+                    <h2>📜 ประวัติการคำนวณ</h2>
+                    <button class="clear-btn small-btn" onclick="clearHistory()">ล้างประวัติ</button>
+                </div>
+                <hr>
+                <div id="history-list-container">
+                    </div>
+            </section>
+        </main>
+
         <main id="creditsPage" class="main-page" style="display: none;">
             <section class="card">
                 <h2>ℹ️ เกี่ยวกับแอปพลิเคชัน</h2>
+                <p>แอปพลิเคชันนี้ถูกสร้างขึ้นโดยมีวัตถุประสงค์เพื่อเป็นเครื่องมือช่วยผู้ป่วยเบาหวานชนิดที่ 1 ในการคำนวณอินซูลินเบื้องต้น</p>
                 <hr>
-
                 <h3>ผู้จัดทำ</h3>
-                <p>[ใส่ชื่อของคุณ หรือชื่อหน่วยงาน/องค์กร]</p>
-                <p>แอปพลิเคชันนี้ถูกสร้างขึ้นโดยมีวัตถุประสงค์เพื่อเป็นเครื่องมือช่วยผู้ป่วยเบาหวานในการคำนวณอินซูลินเบื้องต้น และเพื่อการศึกษาเท่านั้น</p>
-
-                <h3 style="margin-top: 30px;">แหล่งข้อมูลอ้างอิง</h3>
                 <ul>
-                    <li>[ใส่ชื่อแหล่งข้อมูลที่ 1 พร้อมลิงก์ (ถ้ามี)]</li>
-                    <li>[ใส่ชื่อแหล่งข้อมูลที่ 2 พร้อมลิงก์ (ถ้ามี)]</li>
-                    <li>สมาคมโรคเบาหวานแห่งประเทศไทย ในพระราชูปถัมภ์สมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี</li>
+                <li>นสภ. ระพีพัฒน์ ศุภโกศล มหาวิทยาลัยมหาสาราม</li>
+                <li>นสภ. จิรัชยา ตรีทศ มหาวิทยาลัยมหาสารคาม</li>
+                </ul>
+                <h3>แหล่งข้อมูลอ้างอิง</h3>
+                <ul>
+                    <li><a href="https://drive.google.com/file/d/1Ls-_obGCGOs12fQhQZOV_yg42lSIB3B4/view" target="_blank" rel="noopener noreferrer">หนังสือ รู้จักคาร์บ รู้จักนับ ปรับสมดุล ควบคุมเบาหวาน. สมาคมโรคเบาหวานแห่งประเทศไทย ในพระราชูปถัมภ์สมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี</a></li>
                 </ul>
             </section>
         </main>
