@@ -24,13 +24,13 @@
     <div class="container">
         <main id="calculatorPage" class="main-page">
             <header>
-                <h1>💡 เครื่องช่วยคำนวณอินซูลิน</h1>
-                <p class="subtitle">สำหรับอินซูลินชนิดออกฤทธิ์เร็ว (Bolus) ที่ใช้ในมื้ออาหาร</p>
+                <h1>เครื่องมือคำนวณอินซูลิน</h1>
+                <p class="subtitle">สำหรับควบคุมระดับน้ำตาลในผู้ป่วยเบาหวานชนิดที่ 1</p>
             </header>
 
             <section id="settings" class="card primary-card">
-                <h2>ขั้นตอนที่ 1: ตั้งค่าข้อมูลส่วนตัวของคุณ</h2>
-                <p class="warning-text">⚠️ **สำคัญ:** ค่าเหล่านี้ต้องมาจากคำแนะนำของแพทย์หรือทีมผู้รักษาเท่านั้น</p>
+                <h2>ขั้นตอนที่ 1: ข้อมูลส่วนตัว</h2>
+                <p class="warning-text">⚠️ **สำคัญ:** ค่าเหล่านี้ต้องมาจากคำแนะนำของแพทย์</p>
 
                 <div class="input-grid">
                     <div class="input-group">
@@ -38,29 +38,37 @@
                         <input type="number" id="weight" value="60" min="10" step="1">
                     </div>
                     <div class="input-group">
-                        <label for="age-group">ปริมาณอินซูลินเริ่มต้น:</label>
-                        <select id="age-group">
-                            <option value="0.5" selected>ผู้ใหญ่ (0.5 U/kg/วัน)</option>
-                            <option value="0.5">เด็กเล็ก (0.5 U/kg/วัน)</option>
-                            <option value="0.85">เด็กก่อนวัยรุ่น (0.85 U/kg/วัน)</option>
-                            <option value="1.5">วัยรุ่น (1.5 U/kg/วัน)</option>
+                        <label for="insulin-type">ชนิดของอินซูลินที่ใช้:</label>
+                        <select id="insulin-type">
+                            <option value="1800" selected>Aspart (Novorapid)</option>
+                            <option value="1500">RI (Actrapid)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="input-grid">
-                     <div class="input-group">
-                        <label for="insulin-type">ชนิดของอินซูลินที่ใช้:</label>
-                        <select id="insulin-type">
-                            <option value="1800" selected>Aspart (Novorapid, Fiasp)</option>
-                            <option value="1500">RI (Actrapid)</option>
+                    <div class="input-group">
+                        <label for="age-group">กลุ่มอายุ:</label>
+                        <select id="age-group">
+                            <option value="adult" selected>ผู้ใหญ่ (0.4-0.6 U/kg/วัน)</option>
+                            <option value="toddler">เด็กเล็ก (0.4-0.6 U/kg/วัน)</option>
+                            <option value="preteen">เด็กก่อนวัยรุ่น (0.7-1.0 U/kg/วัน)</option>
+                            <option value="teen">วัยรุ่น (1.0-2.0 U/kg/วัน)</option>
                         </select>
                     </div>
+                    <div class="input-group">
+                        <label for="tdd-multiplier">Total daily dose (TDD) (U/kg/วัน):</label>
+                        <input type="number" id="tdd-multiplier" min="0.4" max="0.6" step="0.05" placeholder="แนะนำ 0.5 (ช่วง 0.4-0.6)">
+                    </div>
+                </div>
+                <div class="input-grid">
                     <div class="input-group">
                         <label for="tbg">ระดับน้ำตาลเป้าหมาย (mg/dL):</label>
                         <input type="number" id="tbg" value="120" min="70" step="1">
                     </div>
+                    <div class="input-group"></div>
                 </div>
+
 
                 <button class="calculate-btn" onclick="calculatePersonalFactors()">คำนวณและบันทึกค่าเฉพาะตัว</button>
 
@@ -99,7 +107,7 @@
                         <span class="factor-value-wrapper" id="isf-wrapper"></span>
                     </div>
                 </div>
-                </section>
+            </section>
 
             <section id="meal-calculation" class="card secondary-card" style="display:none;">
                 <h2>ขั้นตอนที่ 2: คำนวณสำหรับมื้อนี้</h2>
@@ -163,8 +171,36 @@
                     <button class="calculate-btn calculate-final-btn" onclick="calculateBolus()">คำนวณอินซูลิน</button>
                 </div>
 
-                <div id="bolus-results" class="result-area final-result-box" style="display: none;">
+                <div id="result-card" class="result-summary-card" style="display: none;">
+                    <div class="result-breakdown">
+                        <h4>รายละเอียดการคำนวณ</h4>
+                        <div class="result-legend">
+                            <span class="legend-item"><span class="legend-color carb-bolus"></span>คุมอาหาร</span>
+                            <span class="legend-item"><span class="legend-color correction-bolus"></span>แก้ไขน้ำตาลสูง</span>
+                        </div>
+                        <div class="breakdown-item carb-bolus">
+                            <span>ปริมาณ Insulin สำหรับคุมอาหารมื้อนี้</span>
+                            <strong id="carb-bolus-value">0.0 ยูนิต</strong>
+                        </div>
+                        <div class="breakdown-item correction-bolus">
+                            <span>ปริมาณ Insulin สำหรับแก้ไขน้ำตาลสูง</span>
+                            <strong id="correction-bolus-value">0.0 ยูนิต</strong>
+                        </div>
                     </div>
+                    <div class="result-chart">
+                        <div id="donut-chart" class="donut-chart">
+                            <div class="chart-center">
+                                <span class="final-dose-label">ปริมาณที่ต้องฉีด</span>
+                                <span class="final-dose-value" id="total-bolus-value">0.0</span>
+                                <span class="unit-text">ยูนิต</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hypo-warning-box" class="hypo-warning-box" style="display: none;">
+                    </div>
+
             </section>
         </main>
 
@@ -207,7 +243,7 @@
                 </ul>
                 <h3>แหล่งข้อมูลอ้างอิง</h3>
                 <ul>
-                    <li><a href="https://drive.google.com/file/d/1Ls-_obGCGOs12fQhQZOV_yg42lSIB3B4/view" target="_blank" rel="noopener noreferrer">หนังสือ รู้จักคาร์บ รู้จักนับ ปรับสมดุล ควบคุมเบาหวาน. สมาคมโรคเบาหวานแห่งประเทศไทย ในพระราชูปถัมภ์สมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี</a></li>
+                    <li><a href="https://drive.google.com/file/d/1Ls-_obGCGOs12fQhQZOV_yg4IBlSIB3B4/view" target="_blank" rel="noopener noreferrer">หนังสือ รู้จักคาร์บ รู้จักนับ ปรับสมดุล ควบคุมเบาหวาน. สมาคมโรคเบาหวานแห่งประเทศไทย ในพระราชูปถัมภ์สมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี</a></li>
                 </ul>
             </section>
         </main>
