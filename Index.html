@@ -6,6 +6,7 @@
     <title>เครื่องช่วยคำนวณอินซูลิน</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/style.css">
+    <link rel="icon" type="image/svg+xml" href="Assets/Images/favicon.png">
 </head>
 <body>
 
@@ -39,10 +40,13 @@
                     </div>
                     <div class="input-group">
                         <label for="insulin-type">ชนิดของอินซูลินที่ใช้:</label>
-                        <select id="insulin-type">
-                            <option value="1800" selected>Aspart (Novorapid)</option>
-                            <option value="1500">RI (Actrapid)</option>
-                        </select>
+                        <div class="insulin-selector-container">
+                            <select id="insulin-type">
+                                <option value="1800" selected>Aspart (Novorapid)</option>
+                                <option value="1500">RI (Actrapid)</option>
+                            </select>
+                            <img id="insulin-image-display" src="" alt="รูปปากกาอินซูลิน" class="insulin-image">
+                        </div>
                     </div>
                 </div>
 
@@ -50,14 +54,14 @@
                     <div class="input-group">
                         <label for="age-group">กลุ่มอายุ:</label>
                         <select id="age-group">
-                            <option value="adult" selected>ผู้ใหญ่ (0.4-0.6 U/kg/วัน)</option>
-                            <option value="toddler">เด็กเล็ก (0.4-0.6 U/kg/วัน)</option>
-                            <option value="preteen">เด็กก่อนวัยรุ่น (0.7-1.0 U/kg/วัน)</option>
-                            <option value="teen">วัยรุ่น (1.0-2.0 U/kg/วัน)</option>
+                            <option value="adult" selected>ผู้ใหญ่ (0.4-0.6 ยูนิต/กิโลกรัม/วัน)</option>
+                            <option value="toddler">เด็กเล็ก (0.4-0.6 ยูนิต/กิโลกรัม/วัน)</option>
+                            <option value="preteen">เด็กก่อนวัยรุ่น (0.7-1.0 ยูนิต/กิโลกรัม/วัน)</option>
+                            <option value="teen">วัยรุ่น (1.0-2.0 ยูนิต/กิโลกรัม/วัน)</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="tdd-multiplier">Total daily dose (TDD) (U/kg/วัน):</label>
+                        <label for="tdd-multiplier">Total daily dose (TDD) (ยูนิต/กิโลกรัม/วัน):</label>
                         <input type="number" id="tdd-multiplier" min="0.4" max="0.6" step="0.05" placeholder="แนะนำ 0.5 (ช่วง 0.4-0.6)">
                     </div>
                 </div>
@@ -141,17 +145,18 @@
                  <div id="CustomTab" class="tab-content">
                     <div id="custom-food-entry" class="custom-food-card">
                         <p class="custom-food-description">สำหรับอาหารที่ไม่มีในรายการ หรืออาหารที่มีฉลากโภชนาการ</p>
-                        <div class="input-grid-custom">
+                        <div class="input-grid">
                             <div class="input-group">
-                                <label for="custom-food-name">ชื่ออาหาร:</label>
-                                <input type="text" id="custom-food-name" placeholder="เช่น ขนมปังโฮลวีท">
+                               <label for="custom-food-name">ชื่ออาหาร:</label>
+                               <input type="text" id="custom-food-name" placeholder="เช่น ขนมปังโฮลวีท">
                             </div>
                             <div class="input-group">
-                                <label for="custom-food-carbs">คาร์โบไฮเดรต (กรัม):</label>
+                                <label for="custom-food-carbs">คาร์โบไฮเดรตทั้งหมด (กรัม):</label>
                                 <input type="number" id="custom-food-carbs" placeholder="45">
                             </div>
                         </div>
                         <button class="add-custom-btn" onclick="addCustomFood()">เพิ่มอาหารนี้ในรายการ</button>
+                        <img src="Assets/Images/nutrition-label-example.png" alt="ตัวอย่างฉลากโภชนาการ" class="example-label-img">
                     </div>
                 </div>
 
@@ -243,7 +248,7 @@
                 </ul>
                 <h3>แหล่งข้อมูลอ้างอิง</h3>
                 <ul>
-                    <li><a href="https://drive.google.com/file/d/1Ls-_obGCGOs12fQhQZOV_yg4IBlSIB3B4/view" target="_blank" rel="noopener noreferrer">หนังสือ รู้จักคาร์บ รู้จักนับ ปรับสมดุล ควบคุมเบาหวาน. สมาคมโรคเบาหวานแห่งประเทศไทย ในพระราชูปถัมภ์สมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี</a></li>
+                    <li><a href="https://www.dmthai.org/new/index.php/sara-khwam-ru/sahrab-bukhkhl-thawpi/diabetes-book/601-2018-03-07-10-38-18" target="_blank" rel="noopener noreferrer">หนังสือ รู้จักคาร์บ รู้จักนับ ปรับสมดุล ควบคุมเบาหวาน. สมาคมโรคเบาหวานแห่งประเทศไทย ในพระราชูปถัมภ์สมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี</a></li>
                 </ul>
             </section>
         </main>
@@ -259,6 +264,21 @@
         </div>
     </div>
 
+    <div id="custom-warning-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span class="modal-icon">⚠️</span>
+                <h2 class="modal-title">คำเตือน! ค่าอาจไม่ถูกต้อง</h2>
+            </div>
+            <div class="modal-body">
+                <p id="modal-warning-text"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel-btn" class="modal-btn cancel-btn">แก้ไขค่า</button>
+                <button id="modal-confirm-btn" class="modal-btn confirm-btn">ยืนยันและดำเนินการต่อ</button>
+            </div>
+        </div>
+    </div>
     <script src="Assets/JS/script.js"></script>
 </body>
 </html>

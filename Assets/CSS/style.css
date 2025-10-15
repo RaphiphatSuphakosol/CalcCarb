@@ -55,7 +55,7 @@ h1 {
 }
 
 .subtitle {
-    font-size: clamp(0.95rem, 3vw, 1rem);
+    font-size: clamp(0.95rem, 3vw, 1.0rem);
     color: var(--sub-text-color);
     margin: 0;
     font-weight: 400;
@@ -327,8 +327,7 @@ body.dark-mode .view-image-btn:active {
 }
 .no-selection-msg { text-align: center; color: var(--sub-text-color); padding: 25px; font-style: italic; background-color: var(--bg-light); border-radius: 8px; }
 .custom-food-card { background-color: #e9f5ff; padding: 20px; border-radius: 8px; }
-.custom-food-description { font-size: 0.9em; color: var(--sub-text-color); margin-top: 0; text-align: center; }
-.input-grid-custom { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; align-items: end; }
+.custom-food-description { font-size: 0.9em; color: var(--sub-text-color); margin-top: 0; text-align: center; margin-bottom: 20px; }
 .add-custom-btn { background-color: var(--primary-color); color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; width: 100%; margin-top: 15px; }
 
 /* ===================================================
@@ -724,7 +723,7 @@ body.dark-mode .hypo-warning-box .hypo-advice {
     .card, .tab-content { padding: 20px 15px; }
     header { margin-bottom: 30px; }
     h1 { font-size: 1.9rem; }
-    .input-grid, .input-grid-custom {
+    .input-grid {
         grid-template-columns: 1fr;
         gap: 20px;
     }
@@ -765,4 +764,181 @@ body.dark-mode .hypo-warning-box .hypo-advice {
         width: 160px;
         height: 160px;
     }
+}
+
+/* ===================================================
+   CUSTOM WARNING MODAL
+   =================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* ซ่อนไว้ก่อน */
+    justify-content: center;
+    align-items: center;
+    z-index: 1001; /* ให้อยู่เหนือ Navbar */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.visible {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-box {
+    background-color: var(--bg-white);
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.visible .modal-box {
+    transform: scale(1);
+}
+
+.modal-header {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom: 1px solid #ffeeba;
+}
+body.dark-mode .modal-header {
+    background-color: var(--warning-bg-color);
+    color: #ffeeba;
+    border-bottom-color: #495057;
+}
+
+.modal-icon {
+    font-size: 3rem;
+}
+
+.modal-title {
+    margin: 10px 0 0 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: none;
+    padding: 0;
+}
+
+.modal-body {
+    padding: 25px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    word-break: keep-all;
+    line-break: thai;
+}
+
+#modal-warning-text {
+    margin: 0;
+}
+.highlight-warning {
+    color: var(--danger-color);
+    background-color: rgba(220, 53, 69, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+.highlight-safe {
+    color: var(--secondary-color);
+    background-color: rgba(40, 167, 69, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.modal-footer {
+    padding: 20px;
+    background-color: var(--bg-light);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.modal-btn {
+    width: auto;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.modal-btn.cancel-btn {
+    background-color: var(--primary-color);
+    color: var(--bg-white);
+}
+.modal-btn.cancel-btn:hover {
+    background-color: #0056b3;
+}
+
+.modal-btn.confirm-btn {
+    background-color: transparent;
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+.modal-btn.confirm-btn:hover {
+    background-color: var(--danger-color);
+    color: var(--bg-white);
+}
+
+@media (max-width: 650px) {
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+    .modal-btn {
+        width: 100%;
+    }
+}
+
+.sfi-custom-hint {
+    font-size: 0.85em;
+    color: var(--sub-text-color);
+    font-style: italic;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.example-label-img {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+/* Style for Insulin Image Display */
+.insulin-selector-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* ระยะห่างระหว่าง dropdown กับรูปภาพ */
+}
+.insulin-selector-container select {
+    flex-grow: 1; /* ทำให้ dropdown ยืดเต็มพื้นที่ที่เหลือ */
+}
+.insulin-image {
+    height: 48px; /* กำหนดความสูงของรูปภาพให้พอดีกับช่อง input */
+    width: auto;
+    border-radius: 6px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 2px;
+    object-fit: contain; /* ทำให้ภาพพอดีในกรอบโดยไม่เสียสัดส่วน */
+    transition: opacity 0.3s ease; /* เพิ่ม animation ตอนเปลี่ยนรูป */
+}
+body.dark-mode .insulin-image {
+    background-color: var(--bg-light);
 }

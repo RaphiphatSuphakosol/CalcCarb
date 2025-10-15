@@ -7,14 +7,14 @@ let favoriteFoods = [];
 let history = [];
 const starSVG = `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>`;
 
-// ========== START: เพิ่ม Object สำหรับจัดการค่า TDD ==========
 const tddRanges = {
     adult: { min: 0.4, max: 0.6, default: 0.5, step: 0.05, text: "0.4 - 0.6" },
     toddler: { min: 0.4, max: 0.6, default: 0.5, step: 0.05, text: "0.4 - 0.6" },
     preteen: { min: 0.7, max: 1.0, default: 0.85, step: 0.05, text: "0.7 - 1.0" },
     teen: { min: 1.0, max: 2.0, default: 1.5, step: 0.1, text: "1.0 - 2.0" }
 };
-// ========== END: เพิ่ม Object ==========
+
+let tddWarningResolver = null; // ตัวแปรสำหรับจัดการการยืนยันใน Modal
 
 // --- Utility Functions ---
 function debounce(func, delay) {
@@ -54,6 +54,34 @@ function closeModal() {
         modal.style.display = 'none';
     }
 }
+
+// ========== START: ฟังก์ชันใหม่สำหรับ Custom Warning Modal ==========
+function showTddWarningModal(message) {
+    const modal = document.getElementById('custom-warning-modal');
+    const warningText = document.getElementById('modal-warning-text');
+
+    warningText.innerHTML = message; // ใช้ innerHTML เพื่อให้ tag <br> และ <b> ทำงาน
+    modal.classList.add('visible');
+
+    // คืนค่า Promise ที่จะถูก resolve เมื่อผู้ใช้กดปุ่ม
+    return new Promise((resolve) => {
+        tddWarningResolver = resolve;
+    });
+}
+
+function handleModalDecision(confirmed) {
+    const modal = document.getElementById('custom-warning-modal');
+    modal.classList.remove('visible');
+
+    // หน่วงเวลาเล็กน้อยเพื่อให้ animation ของ CSS ทำงานจบก่อน
+    setTimeout(() => {
+        if (tddWarningResolver) {
+            tddWarningResolver(confirmed); // ส่งค่า true (ยืนยัน) หรือ false (ยกเลิก) กลับไป
+            tddWarningResolver = null; // เคลียร์ค่าทิ้ง
+        }
+    }, 300);
+}
+// ========== END: ฟังก์ชันใหม่สำหรับ Custom Warning Modal ==========
 
 function openTab(evt, tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = "none");
@@ -208,36 +236,47 @@ function calculateActualAmount(unitString, servings) {
     if (!unitString || isNaN(servings) || servings <= 0) {
         return "-";
     }
-    const gcd = (a, b) => b ? gcd(b, a % b) : a;
-    return unitString.replace(/(\d+(\.\d+)?)\s*\/\s*(\d+(\.\d+)?)|(\d+(\.\d+)?)/g, (match) => {
-        if (match.includes('/')) {
-            const parts = match.split('/');
-            const numerator = parseFloat(parts[0].trim());
-            const denominator = parseFloat(parts[1].trim());
-            if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
-                const highPrecisionServings = Math.round(servings * 100);
-                const highPrecisionNum = Math.round(numerator * 100);
-                let newNumerator = highPrecisionServings * highPrecisionNum;
-                let newDenominator = denominator * 100 * 100;
-                const commonDivisor = gcd(newNumerator, newDenominator);
-                let simplifiedNum = newNumerator / commonDivisor;
-                let simplifiedDenom = newDenominator / commonDivisor;
-                if (simplifiedDenom === 1) return simplifiedNum.toString();
-                if (simplifiedNum > simplifiedDenom) {
-                     const wholePart = Math.floor(simplifiedNum / simplifiedDenom);
-                     const remainder = simplifiedNum % simplifiedDenom;
-                     return remainder === 0 ? wholePart.toString() : `${wholePart} ${remainder}/${simplifiedDenom}`;
+
+    // --- ส่วนที่แก้ไข ---
+    // ตรวจสอบว่าในหน่วยนั้นมีตัวเลขอยู่หรือไม่ (เช่น "1 ทัพพี" vs "หน่วย")
+    const hasNumberInUnit = /\d/.test(unitString);
+
+    if (hasNumberInUnit) {
+        // ถ้ามีตัวเลข: ใช้ตรรกะการคำนวณแบบเดิมที่ซับซ้อน
+        const gcd = (a, b) => b ? gcd(b, a % b) : a;
+        return unitString.replace(/(\d+(\.\d+)?)\s*\/\s*(\d+(\.\d+)?)|(\d+(\.\d+)?)/g, (match) => {
+            if (match.includes('/')) {
+                const parts = match.split('/');
+                const numerator = parseFloat(parts[0].trim());
+                const denominator = parseFloat(parts[1].trim());
+                if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
+                    const highPrecisionServings = Math.round(servings * 100);
+                    const highPrecisionNum = Math.round(numerator * 100);
+                    let newNumerator = highPrecisionServings * highPrecisionNum;
+                    let newDenominator = denominator * 100 * 100;
+                    const commonDivisor = gcd(newNumerator, newDenominator);
+                    let simplifiedNum = newNumerator / commonDivisor;
+                    let simplifiedDenom = newDenominator / commonDivisor;
+                    if (simplifiedDenom === 1) return simplifiedNum.toString();
+                    if (simplifiedNum > simplifiedDenom) {
+                         const wholePart = Math.floor(simplifiedNum / simplifiedDenom);
+                         const remainder = simplifiedNum % simplifiedDenom;
+                         return remainder === 0 ? wholePart.toString() : `${wholePart} ${remainder}/${simplifiedDenom}`;
+                    }
+                    return `${simplifiedNum}/${simplifiedDenom}`;
                 }
-                return `${simplifiedNum}/${simplifiedDenom}`;
+            } else {
+                const num = parseFloat(match);
+                if (!isNaN(num)) {
+                    return formatNumber(num * servings).toString();
+                }
             }
-        } else {
-            const num = parseFloat(match);
-            if (!isNaN(num)) {
-                return formatNumber(num * servings).toString();
-            }
-        }
-        return match;
-    });
+            return match;
+        });
+    } else {
+        // ถ้าไม่มีตัวเลข (เช่น "หน่วย"): ให้แสดงจำนวนตามด้วยหน่วยตรงๆ เลย
+        return `${formatNumber(servings)} ${unitString}`;
+    }
 }
 
 // --- Meal, Favorites, & History Management ---
@@ -294,17 +333,21 @@ function clearMeal() {
 function addCustomFood() {
     const nameInput = document.getElementById('custom-food-name');
     const carbInput = document.getElementById('custom-food-carbs');
+
     if (validateInput(nameInput, true) && validateInput(carbInput)) {
         selectedFoods.push({
             id: Date.now(),
             name: nameInput.value,
             carbPerServe: parseFloat(carbInput.value),
-            unit: 'ครั้ง',
+            unit: 'หน่วย',
             servings: 1,
-            itemDomId: null
+            itemDomId: null,
+            isCustom: true,
         });
+
         nameInput.value = '';
         carbInput.value = '';
+
         renderSelectedFoods();
     }
 }
@@ -348,6 +391,16 @@ function renderSelectedFoods() {
     selectedFoods.forEach((food, index) => {
         const totalCarb = food.servings * food.carbPerServe;
         const calculatedUnitText = calculateActualAmount(food.unit, food.servings);
+
+        // --- ส่วนที่เพิ่มเข้ามา ---
+        // สร้างตัวแปรสำหรับเก็บ HTML ของคำอธิบาย
+        let customHintHtml = '';
+        // ตรวจสอบว่ามี "ป้าย" isCustom หรือไม่
+        if (food.isCustom) {
+            customHintHtml = `<div class="sfi-custom-hint">*1 หน่วย คือ 1 รายการที่ท่านกรอก (เช่น 1 ซอง, 1 กล่อง, 1 ผล)</div>`;
+        }
+        // --- สิ้นสุดส่วนที่เพิ่มเข้ามา ---
+
         listHtml += `
             <div class="selected-food-item" id="selected-${food.id}">
                 <div class="sfi-header">
@@ -376,7 +429,7 @@ function renderSelectedFoods() {
                         <span class="calculated-amount-label">ปริมาณที่รับประทานจริง</span>
                         <span class="calculated-amount-value">${calculatedUnitText}</span>
                     </div>
-                </div>
+                    ${customHintHtml} </div>
             </div>`;
     });
     listDiv.innerHTML = listHtml;
@@ -537,7 +590,7 @@ function updateTddMultiplier() {
     }
 }
 
-function calculatePersonalFactors() {
+async function calculatePersonalFactors() {
     const weightEl = document.getElementById('weight');
     const multiplierEl = document.getElementById('tdd-multiplier');
 
@@ -545,10 +598,32 @@ function calculatePersonalFactors() {
         (validateInput(weightEl) ? multiplierEl : weightEl).scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
+
+    const ageGroupEl = document.getElementById('age-group');
+    const ageGroup = ageGroupEl.value;
+    const multiplier = parseFloat(multiplierEl.value);
+    const range = tddRanges[ageGroup];
+
+    if (range && (multiplier < range.min || multiplier > range.max)) {
+        const ageGroupName = ageGroupEl.options[ageGroupEl.selectedIndex].text;
+        const cleanAgeGroupName = ageGroupName.split('(')[0].trim();
+
+        const message =
+            `ค่า TDD ที่ท่านกรอก <span class="highlight-warning">${multiplier}</span> ไม่ตรงกับช่วงที่แนะนำสำหรับ<b>กลุ่ม${cleanAgeGroupName}</b> ` +
+            `โดยมีค่าที่แนะนำคือ <span class="highlight-safe">${range.text} ยูนิต/กิโลกรัม/วัน</span> ` +
+            `<br><br>โปรดทราบว่าการใช้ค่าที่ไม่ถูกต้องอาจเป็น<b>อันตรายร้ายแรงได้</b>`;
+
+        const userConfirmed = await showTddWarningModal(message);
+
+        if (!userConfirmed) {
+            multiplierEl.focus();
+            return;
+        }
+    }
+
     savePersonalFactors();
 
     const weight = parseFloat(weightEl.value);
-    const multiplier = parseFloat(multiplierEl.value);
     const insulinRule = parseFloat(document.getElementById('insulin-type').value);
 
     TDD = weight * multiplier;
@@ -598,7 +673,10 @@ function calculateBolus() {
         const carbBolus = ICR > 0 ? (totalCarb / ICR) : 0;
         const correctionBolus = (CBG > TBG && ISF > 0) ? (CBG - TBG) / ISF : 0;
         const totalBolus = Math.max(0, carbBolus) + Math.max(0, correctionBolus);
-        const roundedTotalBolus = Math.round(totalBolus * 2) / 2;
+
+        // --- ส่วนที่แก้ไข ---
+        // เปลี่ยนจากการปัดเศษเป็น .5 มาเป็นจำนวนเต็มที่ใกล้ที่สุด
+        const roundedTotalBolus = Math.round(totalBolus);
 
         document.getElementById('carb-bolus-value').textContent = `${Math.max(0, carbBolus).toFixed(1)} ยูนิต`;
         document.getElementById('correction-bolus-value').textContent = `${Math.max(0, correctionBolus).toFixed(1)} ยูนิต`;
@@ -624,7 +702,6 @@ function calculateBolus() {
     }
 }
 
-
 function closeAllTooltips() {
     document.querySelectorAll('.tooltip-container.active').forEach(activeTooltip => {
         activeTooltip.classList.remove('active');
@@ -648,6 +725,31 @@ function setupTooltips() {
     });
 }
 
+// --- ส่วนที่เพิ่มเข้ามาสำหรับรูปภาพอินซูลิน ---
+
+// 1. สร้าง Object เพื่อจับคู่ค่า value กับ path ของรูปภาพ
+const insulinImages = {
+    '1800': 'Assets/Images/novorapid.png', // รูปของ Aspart (Novorapid)
+    '1500': 'Assets/Images/actrapid.png'   // รูปของ RI (Actrapid)
+};
+
+// 2. สร้างฟังก์ชันสำหรับอัปเดตรูปภาพ
+function updateInsulinImage() {
+    const insulinSelect = document.getElementById('insulin-type');
+    const imageDisplay = document.getElementById('insulin-image-display');
+    const selectedValue = insulinSelect.value;
+
+    // ตั้งค่า opacity เป็น 0 ก่อนเปลี่ยนรูป เพื่อให้เกิด effect fade
+    imageDisplay.style.opacity = 0;
+
+    setTimeout(() => {
+        // อัปเดต src ของรูปภาพจาก Object ที่เราสร้างไว้
+        imageDisplay.src = insulinImages[selectedValue];
+        // คืนค่า opacity เป็น 1 เพื่อให้รูปแสดงผล
+        imageDisplay.style.opacity = 1;
+    }, 150); // หน่วงเวลาเล็กน้อยเพื่อให้ fade out ทัน
+}
+
 // --- App Initialization ---
 window.onload = () => {
     loadTheme();
@@ -658,10 +760,17 @@ window.onload = () => {
     loadFoodData();
     setupTooltips();
 
+    // --- เพิ่ม 2 บรรทัดนี้ ---
+    updateInsulinImage(); // 1. เรียกใช้ครั้งแรกตอนโหลดหน้าเว็บ
+    document.getElementById('insulin-type').addEventListener('change', updateInsulinImage); // 2. ให้เรียกใช้ทุกครั้งที่มีการเปลี่ยนค่า
+
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
     const searchInput = document.getElementById('food-search');
     searchInput.addEventListener('input', debounce(filterFoodList, 300));
 
     const ageGroupSelect = document.getElementById('age-group');
     ageGroupSelect.addEventListener('change', updateTddMultiplier);
+
+    document.getElementById('modal-confirm-btn').addEventListener('click', () => handleModalDecision(true));
+    document.getElementById('modal-cancel-btn').addEventListener('click', () => handleModalDecision(false));
 };
