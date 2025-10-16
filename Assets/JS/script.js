@@ -41,17 +41,49 @@ function openModal(imageUrl, caption) {
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
     const modalCap = document.getElementById('modalCaption');
-    if (modal && modalImg && modalCap) {
+    const loader = document.getElementById('modal-loader');
+
+    if (modal && modalImg && modalCap && loader) {
+        loader.textContent = 'กำลังโหลดรูปภาพ...';
+        loader.style.display = 'block';
+        modalImg.style.display = 'none';
+
+        // --- ส่วนที่แก้ไข ---
+        // 1. ตรวจสอบว่ามี caption หรือไม่ (ไม่ใช่ undefined, null, หรือค่าว่าง)
+        if (caption) {
+            modalCap.textContent = caption;
+            modalCap.style.display = 'block'; // แสดง element ของ caption
+        } else {
+            modalCap.textContent = ''; // เคลียร์ค่าทิ้ง
+            modalCap.style.display = 'none';  // ซ่อน element ของ caption ไปเลย
+        }
+        // --- สิ้นสุดส่วนที่แก้ไข ---
+
+        modalImg.onload = () => {
+            loader.style.display = 'none';
+            modalImg.style.display = 'block';
+        };
+
+        modalImg.onerror = () => {
+            loader.textContent = 'ไม่สามารถโหลดรูปภาพได้';
+        };
+
         modalImg.src = imageUrl;
-        modalCap.textContent = caption;
+        // modalCap.textContent = caption; // <-- บรรทัดนี้ไม่ต้องใช้แล้ว เพราะย้ายไปในเงื่อนไขข้างบน
         modal.style.display = 'block';
     }
 }
 
 function closeModal() {
     const modal = document.getElementById('imageModal');
-    if (modal) {
+    const modalImg = document.getElementById('modalImage');
+
+    if (modal && modalImg) {
         modal.style.display = 'none';
+        // เคลียร์ค่ารูปภาพทิ้งเมื่อปิด Modal เพื่อคืน Memory และป้องกันข้อผิดพลาด
+        modalImg.src = '';
+        modalImg.onload = null;
+        modalImg.onerror = null;
     }
 }
 

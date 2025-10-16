@@ -517,6 +517,16 @@ body.dark-mode .view-image-btn:active {
 @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
 @keyframes slideIn { from {transform: translate(-50%, -70%); opacity: 0;} to {transform: translate(-50%, -50%); opacity: 1;} }
 
+#modal-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--sub-text-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: none; /* ซ่อนไว้เป็นค่าเริ่มต้น */
+}
 /* ===================================================
    RESPONSIVE FOOD LIST STYLES
    =================================================== */
