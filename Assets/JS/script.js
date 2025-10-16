@@ -15,7 +15,7 @@ const tddRanges = {
 };
 
 let tddWarningResolver = null; // ตัวแปรสำหรับจัดการการยืนยันใน Modal
-
+let slideIndex = 1;
 // --- Utility Functions ---
 function debounce(func, delay) {
     let timeout;
@@ -52,7 +52,7 @@ function showPage(pageId, navLink) {
     // --- สิ้นสุดการแก้ไข ---
 
     if (pageId === 'historyPage') {
-        renderHistory();
+        currentSlide(1);
     }
 }
 
@@ -841,3 +841,28 @@ window.onload = () => {
     document.getElementById('modal-confirm-btn').addEventListener('click', () => handleModalDecision(true));
     document.getElementById('modal-cancel-btn').addEventListener('click', () => handleModalDecision(false));
 };
+
+// --- ฟังก์ชันสำหรับควบคุมสไลด์โชว์ ---
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("slide");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}

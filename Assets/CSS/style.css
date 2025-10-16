@@ -72,10 +72,30 @@ h2 { font-size: clamp(1.4rem, 1.2rem + 1.5vw, 1.8rem); color: var(--text-color);
    =================================================== */
 .navbar { background-color: var(--bg-white); box-shadow: 0 2px 5px var(--shadow-color); position: fixed; top: 0; left: 0; width: 100%; z-index: 999; }
 .nav-container { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-.nav-links { display: flex; justify-content: center; align-items: center; flex-grow: 1; }
-.nav-link { color: var(--sub-text-color); text-decoration: none; padding: 15px 15px; font-weight: 600; border-bottom: 3px solid transparent; transition: color 0.3s, border-color 0.3s; white-space: nowrap; }
-.nav-link:hover { color: var(--primary-color); }
-.nav-link.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+.nav-links { display: flex; justify-content: center; align-items: center; flex-grow: 1; gap: 8px; padding: 8px 0; } /* เพิ่ม gap และ padding */
+
+/* ปรับสไตล์ของลิงก์ให้มีมุมมนและ padding ที่เหมาะสม */
+.nav-link {
+    color: var(--sub-text-color);
+    text-decoration: none;
+    padding: 8px 15px; /* ปรับ Padding */
+    font-weight: 600;
+    border-radius: 20px; /* ทำให้มุมมนสวยงาม */
+    transition: color 0.3s, background-color 0.3s; /* เปลี่ยน transition */
+    white-space: nowrap;
+}
+
+/* ทำให้พื้นหลังเปลี่ยนสีเมื่อเอาเมาส์ชี้ */
+.nav-link:hover {
+    background-color: var(--border-color);
+    color: var(--primary-color);
+}
+
+/* เปลี่ยนจากเส้นขีดล่างมาเป็นพื้นหลังสีน้ำเงิน */
+.nav-link.active {
+    color: var(--bg-white); /* เปลี่ยนสีตัวอักษรเป็นสีขาว */
+    background-color: var(--primary-color); /* ใช้พื้นหลังแทนเส้นขีด */
+}
 
 .theme-toggle-btn {
     background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);
@@ -1040,4 +1060,78 @@ body.dark-mode .insulin-image {
 #scroll-to-summary-btn:hover {
     transform: scale(1.05);
     background-color: var(--primary-color); /* เมื่อเมาส์ชี้ให้สีเข้มขึ้น */
+}
+
+/* ===================================================
+   INSTRUCTION SLIDER STYLES
+   =================================================== */
+.slider-container {
+    position: relative;
+    margin: 20px 0;
+}
+.slide {
+    display: none; /* ซ่อนสไลด์ทั้งหมดไว้ก่อน */
+}
+.slide img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+/* ปุ่ม Next & previous */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.3s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0,0,0,0.3);
+}
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.6);
+}
+/* Animation fade */
+.fade {
+    animation-name: fade;
+    animation-duration: 0.5s;
+}
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+/* จุดบอกตำแหน่ง */
+.dot-container {
+    text-align: center;
+    margin-top: 15px;
+}
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 4px;
+    background-color: var(--border-color);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+.active, .dot:hover {
+    background-color: var(--primary-color);
+}
+
+/* Style for Slide Text/Caption */
+.slide-text {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    padding: 15px 5px;
+    text-align: center;
 }
