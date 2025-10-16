@@ -41,10 +41,12 @@
                     <div class="input-group">
                         <label for="insulin-type">ชนิดของอินซูลินที่ใช้:</label>
                         <div class="insulin-selector-container">
-                            <select id="insulin-type">
-                                <option value="1800" selected>Aspart (Novorapid)</option>
-                                <option value="1500">RI (Actrapid)</option>
-                            </select>
+                            <div class="custom-select-wrapper">
+                                <select id="insulin-type">
+                                    <option value="1800" selected>Aspart (Novorapid)</option>
+                                    <option value="1500">RI (Actrapid)</option>
+                                </select>
+                            </div>
                             <img id="insulin-image-display" src="" alt="รูปปากกาอินซูลิน" class="insulin-image">
                         </div>
                     </div>
@@ -53,7 +55,8 @@
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="age-group">กลุ่มอายุ:</label>
-                        <select id="age-group">
+                        <div class="custom-select-wrapper">
+                            <select id="age-group">
                             <option value="adult" selected>ผู้ใหญ่ (0.4-0.6 ยูนิต/กิโลกรัม/วัน)</option>
                             <option value="toddler">เด็กเล็ก (0.4-0.6 ยูนิต/กิโลกรัม/วัน)</option>
                             <option value="preteen">เด็กก่อนวัยรุ่น (0.7-1.0 ยูนิต/กิโลกรัม/วัน)</option>
@@ -260,7 +263,6 @@
         <span class="close-button" onclick="closeModal()">&times;</span>
         <div class="modal-content" onclick="event.stopPropagation()">
             <div id="modal-loader"></div> <img id="modalImage" src="" alt="ตัวอย่างปริมาณอาหาร">
-            <p id="modalCaption"></p>
         </div>
     </div>
 
