@@ -18,17 +18,20 @@
             {
                 "name": "ข้าวต้ม",
                 "baseUnits": 1,
-                "unit": "2 ทัพพี หรือ 3/4 ถ้วยตวง"
+                "unit": "2 ทัพพี หรือ 3/4 ถ้วยตวง",
+                "imageUrl": "Assets/Images/ข้าวต้ม.png"
             },
             {
                 "name": "โจ๊ก",
                 "baseUnits": 1,
-                "unit": "2 ทัพพี หรือ 1/2 ถ้วยตวง"
+                "unit": "2 ทัพพี หรือ 1/2 ถ้วยตวง",
+                "imageUrl": "Assets/Images/โจ๊ก.png"
             },
             {
                 "name": "ควินัว (สุก)",
                 "baseUnits": 1,
-                "unit": "1 ทัพพี หรือ 1/3 ถ้วยตวง"
+                "unit": "1 ทัพพี หรือ 1/3 ถ้วยตวง",
+                "imageUrl": "Assets/Images/ควินัว.png"
             },
             {
                 "name": "ข้าวโอ๊ต",
@@ -278,12 +281,14 @@
             {
                 "name": "กล้วยน้ำว้า",
                 "baseUnits": 1,
-                "unit": "1 ผล"
+                "unit": "1 ผล",
+                "imageUrl": "Assets/Images/กล้วยน้ำว้า.png"
             },
             {
                 "name": "กล้วยหอม (ขนาด 9 นิ้ว)",
                 "baseUnits": 1,
-                "unit": "1/2 ผลกลาง"
+                "unit": "1/2 ผลกลาง",
+                "imageUrl": "Assets/Images/กล้วยหอม.png"
             },
             {
                 "name": "กีวี",
@@ -293,17 +298,20 @@
             {
                 "name": "แก้วมังกร",
                 "baseUnits": 1,
-                "unit": "1/2 ผลกลาง หรือ 8 ชิ้นคำ"
+                "unit": "1/2 ผลกลาง หรือ 8 ชิ้นคำ",
+                "imageUrl": "Assets/Images/แก้วมังกร.png"
             },
             {
                 "name": "ขนุน",
                 "baseUnits": 1,
-                "unit": "3 ยวง"
+                "unit": "3 ยวง",
+                "imageUrl": "Assets/Images/ขนุน.png"
             },
             {
                 "name": "แคนตาลูป",
                 "baseUnits": 1,
-                "unit": "8 ชิ้นคำ"
+                "unit": "8 ชิ้นคำ",
+                "imageUrl": "Assets/Images/แคนตาลูป.png"
             },
             {
                 "name": "เงาะ",
@@ -328,7 +336,8 @@
             {
                 "name": "แตงโม",
                 "baseUnits": 1,
-                "unit": "8 ชิ้นคำ"
+                "unit": "8 ชิ้นคำ",
+                "imageUrl": "Assets/Images/แตงโม.png"
             },
             {
                 "name": "ทุเรียน",
@@ -338,12 +347,14 @@
             {
                 "name": "น้อยหน่า",
                 "baseUnits": 1,
-                "unit": "1/2 ผล"
+                "unit": "1/2 ผล",
+                "imageUrl": "Assets/Images/น้อยหน่าเนื้อ.png"
             },
             {
                 "name": "ฝรั่ง",
                 "baseUnits": 1,
-                "unit": "1 ผลเล็ก หรือ 1/2 ผลกลาง"
+                "unit": "1 ผลเล็ก หรือ 1/2 ผลกลาง",
+                "imageUrl": "Assets/Images/ฝรั่ง.png"
             },
             {
                 "name": "พรุน",
@@ -398,7 +409,8 @@
             {
                 "name": "มะม่วงสุก",
                 "baseUnits": 1,
-                "unit": "1/2 ผลเล็ก"
+                "unit": "1/2 ผลเล็ก",
+                "imageUrl": "Assets/Images/มะม่วงสุก.png"
             },
             {
                 "name": "มะยงชิด",
@@ -408,7 +420,8 @@
             {
                 "name": "มะละกอสุก",
                 "baseUnits": 1,
-                "unit": "8 ชิ้นคำ"
+                "unit": "8 ชิ้นคำ",
+                "imageUrl": "Assets/Images/มะละกอสุก.png"
             },
             {
                 "name": "มังคุด",
@@ -423,7 +436,8 @@
             {
                 "name": "ลองกอง",
                 "baseUnits": 1,
-                "unit": "6-8 ผล"
+                "unit": "6-8 ผล",
+                "imageUrl": "Assets/Images/ลองกอง.png"
             },
             {
                 "name": "ละมุด",
@@ -438,7 +452,8 @@
             {
                 "name": "ลำไย",
                 "baseUnits": 1,
-                "unit": "5-6 ผล"
+                "unit": "5-6 ผล",
+                "imageUrl": "Assets/Images/ลำไย.png"
             },
             {
                 "name": "ลิ้นจี่ (ผลเล็ก)",
@@ -478,7 +493,8 @@
             {
                 "name": "ส้มเขียวหวาน",
                 "baseUnits": 1,
-                "unit": "2 ผลกลาง"
+                "unit": "2 ผลกลาง",
+                "imageUrl": "Assets/Images/ส้มเขียวหวาน.png"
             },
             {
                 "name": "ส้มเช้ง",
@@ -493,7 +509,8 @@
             {
                 "name": "ส้มโอทองดี",
                 "baseUnits": 1,
-                "unit": "2-3 กลีบกลาง"
+                "unit": "2-3 กลีบกลาง",
+                "imageUrl": "Assets/Images/ส้มโอ.png"
             },
             {
                 "name": "สละ",
@@ -503,17 +520,20 @@
             {
                 "name": "สับปะรดสด",
                 "baseUnits": 1,
-                "unit": "8 ชิ้นคำ"
+                "unit": "8 ชิ้นคำ",
+                "imageUrl": "Assets/Images/สับปะรด.png"
             },
             {
                 "name": "สาลี่หอม",
                 "baseUnits": 1,
-                "unit": "1 ผล"
+                "unit": "1 ผล",
+                "imageUrl": "Assets/Images/สาลี่หอม.png"
             },
             {
                 "name": "องุ่นแดง (นอก)",
                 "baseUnits": 1,
-                "unit": "17 ผลเล็ก หรือ 6 ผลใหญ่"
+                "unit": "17 ผลเล็ก หรือ 6 ผลใหญ่",
+                "imageUrl": "Assets/Images/องุ่นแดง.png"
             },
             {
                 "name": "อินทผลัมแห้ง",
@@ -523,7 +543,8 @@
             {
                 "name": "แอปเปิ้ล",
                 "baseUnits": 1,
-                "unit": "1 ผลเล็ก"
+                "unit": "1 ผลเล็ก",
+                "imageUrl": "Assets/Images/แอปเปิ้ลกาล่า.png"
             }
         ]
     },
@@ -534,27 +555,32 @@
             {
                 "name": "หน่อไม้ฝรั่ง",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/หน่อไม้ฝรั่งสุก.png"
             },
             {
                 "name": "สะตอ",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/สะตอสุก.png"
             },
             {
                 "name": "ดอกกะหล่ำ",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/ดอกกะหล่ำสุก.png"
             },
             {
                 "name": "แครอท",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/แครอทสุก.png"
             },
             {
                 "name": "ถั่วลันเตา (ฝัก) / ถั่วลันเตาหวาน",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/ถั่วลันเตาหวานสุก.png"
             },
             {
                 "name": "ถั่วงอกหัวโต",
@@ -564,22 +590,26 @@
             {
                 "name": "มะเขือเปราะ",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/มะเขือเปราะสุก.png"
             },
             {
                 "name": "ถั่วฝักยาว",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/ถั่วฝักยาวสุก.png"
             },
             {
                 "name": "บร็อคโคลี",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/บร็อคโคลีสุก.png"
             },
             {
                 "name": "กะหล่ำปลี",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/กะหล่ำปลีสุก.png"
             },
             {
                 "name": "มะละกอดิบ",
@@ -589,12 +619,14 @@
             {
                 "name": "ข้าวโพดอ่อน",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/ข้าวโพดอ่อนสุก.png"
             },
             {
                 "name": "ผักคะน้า",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/ผักคะน้าสุก.png"
             },
             {
                 "name": "แขนงคะน้า",
@@ -609,7 +641,8 @@
             {
                 "name": "คะน้าฮ่องกง (บร็อคโคลีจีน)",
                 "baseUnits": 0.3,
-                "unit": "1 ทัพพี"
+                "unit": "1 ทัพพี",
+                "imageUrl": "Assets/Images/คะน้าฮ่องกงสุก.png"
             },
             {
                 "name": "กระเจี๊ยบ (ผล)",
@@ -675,7 +708,8 @@
             {
                 "name": "นมแพะ UHT",
                 "carbPerServe": 8,
-                "unit": "1 กล่อง (190 มล.)"
+                "unit": "1 กล่อง (190 มล.)",
+                "imageUrl": "Assets/Images/นมแพะ.png"
             },
             {
                 "name": "นมข้นหวาน",
@@ -685,7 +719,8 @@
             {
                 "name": "นมผง (ฟูลครีม)",
                 "carbPerServe": 11,
-                "unit": "4 ช้อนโต๊ะ (30 กรัม)"
+                "unit": "4 ช้อนโต๊ะ (30 กรัม)",
+                "imageUrl": "Assets/Images/นมขาดมันเนย.png"
             },
             {
                 "name": "นมผงขาดมันเนย",
@@ -695,7 +730,8 @@
             {
                 "name": "นมผงพร่องมันเนย (เสริมแคลเซียม)",
                 "carbPerServe": 13,
-                "unit": "4 ช้อนโต๊ะ (30 กรัม)"
+                "unit": "4 ช้อนโต๊ะ (30 กรัม)",
+                "imageUrl": "Assets/Images/นมพร่องมันเนย.png"
             },
             {
                 "name": "นมระเหยหรือนมข้นจืด",
@@ -710,7 +746,8 @@
             {
                 "name": "นมสดจืดไขมันเต็มส่วน (นมครบส่วน)",
                 "carbPerServe": 12,
-                "unit": "1 แก้ว (240 มล.)"
+                "unit": "1 แก้ว (240 มล.)",
+                "imageUrl": "Assets/Images/นมครบส่วน.png"
             },
             {
                 "name": "นมสดจืดพร่องมันเนย",
@@ -720,7 +757,8 @@
             {
                 "name": "นมจืดสเตอริไลส์",
                 "carbPerServe": 7,
-                "unit": "1 กระป๋อง (140 มล.)"
+                "unit": "1 กระป๋อง (140 มล.)",
+                "imageUrl": "Assets/Images/นมสเตอริไลส์.png"
             },
             {
                 "name": "นมจืดสเตอริไลส์พร่องมันเนย",
@@ -730,7 +768,8 @@
             {
                 "name": "โยเกิร์ต 0% ไขมัน (รสธรรมชาติ)",
                 "carbPerServe": 13,
-                "unit": "1 ถ้วยเล็ก (110 กรัม)"
+                "unit": "1 ถ้วยเล็ก (110 กรัม)",
+                "imageUrl": "Assets/Images/โยเกิร์ต.png"
             },
             {
                 "name": "โยเกิร์ตไขมันต่ำ (รสธรรมชาติ)",
@@ -756,7 +795,8 @@
             {
                 "name": "ขนมครก",
                 "baseUnits": 3,
-                "unit": "3 คู่ (90 กรัม)"
+                "unit": "3 คู่ (90 กรัม)",
+                "imageUrl": "Assets/Images/ขนมครก.png"
             },
             {
                 "name": "ขนมชั้น",
@@ -786,7 +826,8 @@
             {
                 "name": "ขนมเบื้องครีมไส้เค็ม",
                 "baseUnits": 1.5,
-                "unit": "6 ชิ้น (30 กรัม)"
+                "unit": "6 ชิ้น (30 กรัม)",
+                "imageUrl": "Assets/Images/ขนมเบื้องครีมไส้เค็ม.png"
             },
             {
                 "name": "ขนมปากหม้อ",
@@ -796,12 +837,14 @@
             {
                 "name": "ขนมลอดช่องน้ำกะทิ",
                 "baseUnits": 1.5,
-                "unit": "1/2 ถ้วยตวง (100 กรัม)"
+                "unit": "1/2 ถ้วยตวง (100 กรัม)",
+                "imageUrl": "Assets/Images/ขนมลอดช่องน้ำกะทิ.png"
             },
             {
                 "name": "ขนมลูกชุบ",
                 "baseUnits": 1,
-                "unit": "4 ชิ้น (35 กรัม)"
+                "unit": "4 ชิ้น (35 กรัม)",
+                "imageUrl": "Assets/Images/ขนมลูกชุบ.png"
             },
             {
                 "name": "ขนมสาคูไส้หมู",
@@ -816,12 +859,14 @@
             {
                 "name": "ข้าวต้มมัดไส้กล้วย",
                 "baseUnits": 2,
-                "unit": "1 กลีบ (70 กรัม)"
+                "unit": "1 กลีบ (70 กรัม)",
+                "imageUrl": "Assets/Images/ข้าวต้มมัดไส้กล้วย.png"
             },
             {
                 "name": "ข้าวเหนียวปิ้งไส้กล้วย",
                 "baseUnits": 2.5,
-                "unit": "1 ชิ้น (85 กรัม)"
+                "unit": "1 ชิ้น (85 กรัม)",
+                "imageUrl": "Assets/Images/ข้าวเหนียวปิ้งไส้เผือก.png"
             },
             {
                 "name": "ข้าวเหนียวมูล",
@@ -836,12 +881,14 @@
             {
                 "name": "เต้าทึง",
                 "baseUnits": 3,
-                "unit": "1 ถ้วยตวง (200 กรัม)"
+                "unit": "1 ถ้วยตวง (200 กรัม)",
+                "imageUrl": "Assets/Images/เต้าทึง.png"
             },
             {
                 "name": "ทองม้วน",
                 "baseUnits": 1,
-                "unit": "4 ชิ้นกลม (14 กรัม)"
+                "unit": "4 ชิ้นกลม (14 กรัม)",
+                "imageUrl": "Assets/Images/ทองม้วน.png"
             },
             {
                 "name": "ทุเรียนทอดอบกรอบ",
@@ -851,7 +898,8 @@
             {
                 "name": "บะจ่าง",
                 "baseUnits": 4,
-                "unit": "1 ชิ้น (180 กรัม)"
+                "unit": "1 ชิ้น (180 กรัม)",
+                "imageUrl": "Assets/Images/บะจ่าง.png"
             },
             {
                 "name": "บัวลอยน้ำขิง",
@@ -861,7 +909,8 @@
             {
                 "name": "ปาท่องโก๋",
                 "baseUnits": 0.5,
-                "unit": "1 คู่ (20 กรัม)"
+                "unit": "1 คู่ (20 กรัม)",
+                "imageUrl": "Assets/Images/ปาท่องโก๋.png"
             },
             {
                 "name": "ขนมปังกรอบ (เนย+น้ำตาล)",
@@ -871,7 +920,8 @@
             {
                 "name": "ขนมปังขาไก่รสต่างๆ",
                 "baseUnits": 1,
-                "unit": "1/3 ถ้วยตวง (25-30 กรัม)"
+                "unit": "1/3 ถ้วยตวง (25-30 กรัม)",
+                "imageUrl": "Assets/Images/ขนมปังขาไก่รสต่าง.png"
             },
             {
                 "name": "ขนมปังเนยสด",
@@ -886,7 +936,8 @@
             {
                 "name": "คุกกี้เนย",
                 "baseUnits": 0.7,
-                "unit": "3 ชิ้น (15 กรัม)"
+                "unit": "3 ชิ้น (15 กรัม)",
+                "imageUrl": "Assets/Images/คุกกี้เนย.png"
             },
             {
                 "name": "คุกกี้ผสมช็อกโกแลตชิพ",
@@ -901,7 +952,8 @@
             {
                 "name": "เค้กชิฟฟอน",
                 "baseUnits": 1,
-                "unit": "1 ชิ้น (30 กรัม)"
+                "unit": "1 ชิ้น (30 กรัม)",
+                "imageUrl": "Assets/Images/เค้กชิฟฟอน.png"
             },
             {
                 "name": "เค้กเนย",
@@ -931,7 +983,8 @@
             {
                 "name": "ซาลาเปาไส้หมูสับ (กลาง)",
                 "baseUnits": 1.3,
-                "unit": "1 ลูก (55 กรัม)"
+                "unit": "1 ลูก (55 กรัม)",
+                "imageUrl": "Assets/Images/ซาลาเปาไส้หมูสับ.png"
             },
             {
                 "name": "เดนิส (ชีส)",
@@ -941,12 +994,14 @@
             {
                 "name": "โดนัทพอนเดอริงเกรช",
                 "baseUnits": 2,
-                "unit": "1 ชิ้น (Ø 4 นิ้ว)"
+                "unit": "1 ชิ้น (Ø 4 นิ้ว)",
+                "imageUrl": "Assets/Images/โดนัทพอนเดอริงเกรช.png"
             },
             {
                 "name": "บราวนี่ (ไม่เคลือบน้ำตาล)",
                 "baseUnits": 1,
-                "unit": "1 ชิ้นเล็ก (2x2 นิ้ว)"
+                "unit": "1 ชิ้นเล็ก (2x2 นิ้ว)",
+                "imageUrl": "Assets/Images/บราวนี่.png"
             },
             {
                 "name": "พายไก่ (ขนาดกลาง)",
@@ -966,12 +1021,14 @@
             {
                 "name": "มัชกิ้นโดนัท",
                 "baseUnits": 0.5,
-                "unit": "1 ชิ้น"
+                "unit": "1 ชิ้น",
+                "imageUrl": "Assets/Images/มัชกิ้นโดนัท.png"
             },
             {
                 "name": "วาฟเฟิล",
                 "baseUnits": 1.3,
-                "unit": "1 ชิ้น (Ø 4 นิ้ว)"
+                "unit": "1 ชิ้น (Ø 4 นิ้ว)",
+                "imageUrl": "Assets/Images/วาฟเฟิล.png"
             },
             {
                 "name": "เอแคร์ไส้ครีม",
@@ -1002,12 +1059,14 @@
             {
                 "name": "ผัดซีอิ๊วหมูใส่ไข่",
                 "baseUnits": 3.3,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/บะหมี่นํ้าหมูลูกชิ้น.png"
             },
             {
                 "name": "ราดหน้าเส้นใหญ่หมู",
                 "baseUnits": 2.8,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/ราดหน้าเส้นใหญ่หมู.png"
             },
             {
                 "name": "ก๋วยเตี๋ยวเส้นหมี่ไก่มะระ",
@@ -1017,22 +1076,26 @@
             {
                 "name": "สุกี้ทะเล",
                 "baseUnits": 1.7,
-                "unit": "1 ชาม"
+                "unit": "1 ชาม",
+                "imageUrl": "Assets/Images/สุกี้ทะเล.png"
             },
             {
                 "name": "ผัดไทยใส่ไข่",
                 "baseUnits": 3,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/ผัดไทยใส่ไข่.png"
             },
             {
                 "name": "ข้าวหมกไก่",
                 "baseUnits": 3.6,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/ข้าวหมกไก่.png"
             },
             {
                 "name": "ขนมจีนน้ำยา",
                 "baseUnits": 1.7,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/ขนมจีนนํ้ายา.png"
             },
             {
                 "name": "ข้าวหมูแดง",
@@ -1042,7 +1105,8 @@
             {
                 "name": "ข้าวมันไก่",
                 "baseUnits": 2.3,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/ข้าวมันไก่.png"
             },
             {
                 "name": "ข้าวผัดหมูใส่ไข่",
@@ -1057,22 +1121,26 @@
             {
                 "name": "ข้าวขาหมู",
                 "baseUnits": 3.3,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/ข้าวขาหมู.png"
             },
             {
                 "name": "สปาเก็ตตี้คาโบนาร่า",
                 "baseUnits": 2.3,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/สปาเก็ตตี้คาโบนาร่า.png"
             },
             {
                 "name": "ก๋วยจั๊บ",
                 "baseUnits": 2.3,
-                "unit": "1 ชาม"
+                "unit": "1 ชาม",
+                "imageUrl": "Assets/Images/ก๋วยจั๊บ.png"
             },
             {
                 "name": "ข้าวคลุกกะปิ",
                 "baseUnits": 2.7,
-                "unit": "1 จาน"
+                "unit": "1 จาน",
+                "imageUrl": "Assets/Images/ข้าวคลุกกะปิ.png"
             },
             {
                 "name": "ลาซานญ่าเนื้อ",
@@ -1092,7 +1160,8 @@
             {
                 "name": "ข้าวซอยไก่",
                 "baseUnits": 2.7,
-                "unit": "1 ชาม"
+                "unit": "1 ชาม",
+                "imageUrl": "Assets/Images/ข้าวซอยไก่.png"
             }
         ]
     },
@@ -1108,17 +1177,20 @@
             {
                 "name": "โกโก้ (ร้อน)",
                 "baseUnits": 2,
-                "unit": "1 แก้ว (240 มล.)"
+                "unit": "1 แก้ว (240 มล.)",
+                "imageUrl": "Assets/Images/โกโก้ร้อน.png"
             },
             {
                 "name": "ลาเต้ (ร้อน)",
                 "baseUnits": 0.5,
-                "unit": "1 แก้ว (240 มล.)"
+                "unit": "1 แก้ว (240 มล.)",
+                "imageUrl": "Assets/Images/กาแฟลาเต้.png"
             },
             {
                 "name": "ม็อคคา (ร้อน)",
                 "baseUnits": 1.3,
-                "unit": "1 แก้ว (240 มล.)"
+                "unit": "1 แก้ว (240 มล.)",
+                "imageUrl": "Assets/Images/ม็อคคา.png"
             },
             {
                 "name": "ม็อคคา (เย็น)",
@@ -1128,12 +1200,14 @@
             {
                 "name": "กาแฟเย็น",
                 "baseUnits": 3,
-                "unit": "1 แก้ว (480 มล.)"
+                "unit": "1 แก้ว (480 มล.)",
+                "imageUrl": "Assets/Images/กาแฟเย็น.png"
             },
             {
                 "name": "ชานมเย็น",
                 "baseUnits": 2.3,
-                "unit": "1 แก้ว (480 มล.)"
+                "unit": "1 แก้ว (480 มล.)",
+                "imageUrl": "Assets/Images/ชานมเย็น.png"
             },
             {
                 "name": "ชาดำเย็น",
@@ -1143,12 +1217,14 @@
             {
                 "name": "โกโก้เย็น",
                 "baseUnits": 3.7,
-                "unit": "1 แก้ว (480 มล.)"
+                "unit": "1 แก้ว (480 มล.)",
+                "imageUrl": "Assets/Images/โกโก้เย็น.png"
             },
             {
                 "name": "น้ำเก็กฮวย",
                 "baseUnits": 1.5,
-                "unit": "1 แก้ว (200 มล.)"
+                "unit": "1 แก้ว (200 มล.)",
+                "imageUrl": "Assets/Images/นํ้าเก็กฮวย.png"
             },
             {
                 "name": "น้ำกระเจี๊ยบ",
@@ -1158,7 +1234,8 @@
             {
                 "name": "น้ำตาลสด",
                 "baseUnits": 2.5,
-                "unit": "1 แก้ว (200 มล.)"
+                "unit": "1 แก้ว (200 มล.)",
+                "imageUrl": "Assets/Images/นํ้าตาลสด.png"
             },
             {
                 "name": "น้ำมะพร้าว 100%",
@@ -1168,7 +1245,8 @@
             {
                 "name": "น้ำแอปเปิ้ล / น้ำส้ม / น้ำสับปะรด (สด)",
                 "baseUnits": 1,
-                "unit": "1/2 แก้ว (120 มล.)"
+                "unit": "1/2 แก้ว (120 มล.)",
+                "imageUrl": "Assets/Images/นํ้าแอปเปิ้ล.png"
             },
             {
                 "name": "น้ำองุ่น / น้ำลูกพรุน",
@@ -1178,7 +1256,8 @@
             {
                 "name": "น้ำอัดลม (โคล่า)",
                 "baseUnits": 1.7,
-                "unit": "1 กระป๋อง (245 มล.)"
+                "unit": "1 กระป๋อง (245 มล.)",
+                "imageUrl": "Assets/Images/นํ้าอัดลม.png"
             },
             {
                 "name": "น้ำอัดลม (แดง - เขียว)",
@@ -1188,27 +1267,32 @@
             {
                 "name": "ชาเขียวรสน้ำผึ้งมะนาว",
                 "baseUnits": 4,
-                "unit": "1 ขวด (500 มล.)"
+                "unit": "1 ขวด (500 มล.)",
+                "imageUrl": "Assets/Images/ชาเขียวรสนํ้าผึ้งมะนาว.png"
             },
             {
                 "name": "น้ำแดง (มะนาว) โซดา",
                 "baseUnits": 2.7,
-                "unit": "1 แก้ว (480 มล.)"
+                "unit": "1 แก้ว (480 มล.)",
+                "imageUrl": "Assets/Images/นํ้าแดง.png"
             },
             {
                 "name": "นมเปรี้ยวยาคูลท์",
                 "baseUnits": 1,
-                "unit": "1 ขวด (80 มล.)"
+                "unit": "1 ขวด (80 มล.)",
+                "imageUrl": "Assets/Images/นมเปรี้ยว.png"
             },
             {
                 "name": "โยเกิร์ตพร้อมดื่มยูเอชที รสผลไม้",
                 "baseUnits": 1,
-                "unit": "1 กล่อง (180 มล.)"
+                "unit": "1 กล่อง (180 มล.)",
+                "imageUrl": "Assets/Images/โยเกิร์ตพร้อมดื่มรสผลไม้.png"
             },
             {
                 "name": "นมปรุงแต่งรสช็อกโกแลต",
                 "baseUnits": 1.7,
-                "unit": "1 กล่อง (225 มล.)"
+                "unit": "1 กล่อง (225 มล.)",
+                "imageUrl": "Assets/Images/นมปรุงแต่งรสช็อกโกแลต.png"
             },
             {
                 "name": "นมปรุงแต่งรสสตรอเบอรี",
@@ -1218,12 +1302,14 @@
             {
                 "name": "โอวัลติน (สูตรเพิ่มมอลต์และช็อกโกแลต)",
                 "baseUnits": 2,
-                "unit": "1 กล่อง (180 มล.)"
+                "unit": "1 กล่อง (180 มล.)",
+                "imageUrl": "Assets/Images/โอวัลติน.png"
             },
             {
                 "name": "เครื่องดื่มรังนก (สูตรน้ำตาลกรวด)",
                 "baseUnits": 0.5,
-                "unit": "1 ขวด (70 มล.)"
+                "unit": "1 ขวด (70 มล.)",
+                "imageUrl": "Assets/Images/เครื่องดื่มรังนก.png"
             },
             {
                 "name": "เครื่องดื่มซุปไก่สกัด (สูตรดั้งเดิม)",
@@ -1238,7 +1324,8 @@
             {
                 "name": "เครื่องดื่มนักกีฬา",
                 "baseUnits": 2,
-                "unit": "1 ขวด (250 มล.)"
+                "unit": "1 ขวด (250 มล.)",
+                "imageUrl": "Assets/Images/เครื่องดื่มนักกีฬา.png"
             },
             {
                 "name": "เกเตอเรด (Gatorade)",
@@ -1259,17 +1346,20 @@
             {
                 "name": "ซอสบาร์บีคิว",
                 "baseUnits": 0.3,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/ซอสบาร์บีคิว.png"
             },
             {
                 "name": "ซอสพริก",
                 "baseUnits": 0.3,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/ซอสพริก.png"
             },
             {
                 "name": "ซอสมะเขือเทศ / แคทชับ",
                 "baseUnits": 0.3,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/ซอสมะเขือเทศ.png"
             },
             {
                 "name": "ซูโครสไซรัป / เมเปิ้ลไซรัป",
@@ -1284,22 +1374,26 @@
             {
                 "name": "น้ำจิ้มไก่",
                 "baseUnits": 0.5,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/นํ้าจิ้มไก่.png"
             },
             {
                 "name": "น้ำจิ้มสุกี้",
                 "baseUnits": 0.3,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/นํ้าจิ้มสุกี้.png"
             },
             {
                 "name": "น้ำจิ้มหมูสะเต๊ะ",
                 "baseUnits": 0.3,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/นํ้าจิ้มหมูสะเต๊ะ.png"
             },
             {
                 "name": "น้ำเชื่อมเข้มข้น",
                 "baseUnits": 1,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/นํ้าเชื่อมเข้มข้น.png"
             },
             {
                 "name": "น้ำเชื่อมใส่กะทิ",
@@ -1309,7 +1403,8 @@
             {
                 "name": "น้ำตาลทรายขาว",
                 "baseUnits": 0.3,
-                "unit": "1 ช้อนชา"
+                "unit": "1 ช้อนชา",
+                "imageUrl": "Assets/Images/นํ้าตาลทราย.png"
             },
             {
                 "name": "น้ำตาลทรายแดง",
@@ -1324,12 +1419,14 @@
             {
                 "name": "น้ำตาลมะพร้าว (น้ำตาลปึก)",
                 "baseUnits": 0.3,
-                "unit": "1 ช้อนชา"
+                "unit": "1 ช้อนชา",
+                "imageUrl": "Assets/Images/นํ้าตาลมะพร้าว.png"
             },
             {
                 "name": "น้ำผึ้ง",
                 "baseUnits": 1,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/นํ้าผึ้ง.png"
             },
             {
                 "name": "นูเทลล่า",
@@ -1359,7 +1456,8 @@
             {
                 "name": "แยมสตรอเบอรี",
                 "baseUnits": 1,
-                "unit": "1 ช้อนโต๊ะ"
+                "unit": "1 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/แยมสตรอเบอรี.png"
             },
             {
                 "name": "แยมสับปะรด",
@@ -1374,7 +1472,8 @@
             {
                 "name": "อาจาด",
                 "baseUnits": 0.5,
-                "unit": "2 ช้อนโต๊ะ"
+                "unit": "2 ช้อนโต๊ะ",
+                "imageUrl": "Assets/Images/อาจาด.png"
             }
         ]
     },
@@ -1384,28 +1483,32 @@
         "items": [
             {
                 "name": "ถั่วลิสง",
-                "carbPerServe": 6.4,
-                "unit": "30 กรัม"
+                "carbPerServe": 2.1,
+                "unit": "10 เม็ด",
+                "imageUrl": "Assets/Images/ถั่วลิสง.png"
             },
             {
                 "name": "เมล็ดมะม่วงหิมพานต์",
-                "carbPerServe": 9.8,
-                "unit": "30 กรัม"
+                "carbPerServe": 3.6,
+                "unit": "6 เม็ด",
+                "imageUrl": "Assets/Images/เมล็ดมะม่วงหิมพานต์.png"
             },
             {
                 "name": "อัลมอนด์",
-                "carbPerServe": 6.3,
-                "unit": "30 กรัม"
+                "carbPerServe": 1,
+                "unit": "6 เม็ด",
+                "imageUrl": "Assets/Images/อัลมอนต์.png"
             },
             {
                 "name": "แมคคาเดเมีย",
-                "carbPerServe": 4,
-                "unit": "30 กรัม"
+                "carbPerServe": 0.9,
+                "unit": "6 เม็ด"
             },
             {
                 "name": "พิตาชิโอ",
-                "carbPerServe": 8.5,
-                "unit": "30 กรัม"
+                "carbPerServe": 3.1,
+                "unit": "13 เม็ด",
+                "imageUrl": "Assets/Images/ถั่วพิตาชิโอ.png"
             }
         ]
     },
@@ -1416,37 +1519,42 @@
             {
                 "name": "เนื้อปลา",
                 "carbPerServe": 0,
-                "unit": "1 ส่วน (2 ช้อนโต๊ะ)"
+                "unit": "1 ส่วน"
             },
             {
                 "name": "เนื้ออกไก่",
                 "carbPerServe": 0,
-                "unit": "1 ส่วน (2 ช้อนโต๊ะ)"
+                "unit": "1 ส่วน"
             },
             {
                 "name": "หมูเนื้อแดง",
                 "carbPerServe": 0,
-                "unit": "1 ส่วน (2 ช้อนโต๊ะ)"
+                "unit": "1 ส่วน",
+                "imageUrl": "Assets/Images/หมูเนื้อแดงสุก.png"
             },
             {
                 "name": "ไข่",
                 "carbPerServe": 0,
-                "unit": "1 ฟอง"
+                "unit": "1 ฟอง",
+                "imageUrl": "Assets/Images/ไข่ทั้งฟอง.png"
             },
             {
                 "name": "เต้าหู้อ่อน",
                 "carbPerServe": 0,
-                "unit": "180 กรัม"
+                "unit": "180 กรัม",
+                "imageUrl": "Assets/Images/เต้าหู้.png"
             },
             {
                 "name": "น้ำมันทุกชนิด",
                 "carbPerServe": 0,
-                "unit": "1 ช้อนชา"
+                "unit": "1 ช้อนชา",
+                "imageUrl": "Assets/Images/นํ้ามัน.png"
             },
             {
                 "name": "เนยสด / เนยเทียม",
                 "carbPerServe": 0,
-                "unit": "1 ช้อนชา"
+                "unit": "1 ช้อนชา",
+                "imageUrl": "Assets/Images/เนยเทียม.png"
             },
             {
                 "name": "มายองเนส",
@@ -1459,9 +1567,51 @@
                 "unit": "1 ช้อนโต๊ะ"
             },
             {
-                "name": "ผักใบต่างๆ (แตงกวา, ผักกาดขาว, บวบ, ฟักเขียว)",
+                "name": "แตงกวา",
+                "carbPerServe": 0,
+                "unit": "1 ส่วน (1 ทัพพี)",
+                "imageUrl": "Assets/Images/แตงกวา.png"
+            },
+            {
+                "name": "บวบ",
+                "carbPerServe": 0,
+                "unit": "1 ส่วน (1 ทัพพี)",
+                "imageUrl": "Assets/Images/บวบ.png"
+            },
+            {
+                "name": "ผักกวางตุ้ง",
+                "carbPerServe": 0,
+                "unit": "1 ส่วน (1 ทัพพี)",
+                "imageUrl": "Assets/Images/ผักกวางตุ้ง.png"
+            },
+            {
+                "name": "ผักกาดขาว",
+                "carbPerServe": 0,
+                "unit": "1 ส่วน (1 ทัพพี)",
+                "imageUrl": "Assets/Images/ผักกาดขาว.png"
+            },
+            {
+                "name": "ผักกาดหอม",
+                "carbPerServe": 0,
+                "unit": "1 ส่วน (1 ทัพพี)",
+                "imageUrl": "Assets/Images/ผักกาดหอม.png"
+            },
+            {
+                "name": "ผักบุ้งไทย",
+                "carbPerServe": 0,
+                "unit": "1 ส่วน (1 ทัพพี)",
+                "imageUrl": "Assets/Images/ผักบุ้งไทย.png"
+            },
+            {
+                "name": "ผักชนิดอื่น ๆ ที่ไม่ได้ระบุอยู่ในหมวดผักที่มีแป้ง",
                 "carbPerServe": 0,
                 "unit": "1 ส่วน (1 ทัพพี)"
+            },
+            {
+                "name": "ไส้กรอก",
+                "carbPerServe": 0,
+                "unit": "1 ชิ้น",
+                "imageUrl": "Assets/Images/ไส้กรอก.png"
             }
         ]
     }
