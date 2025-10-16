@@ -37,27 +37,15 @@ function showPage(pageId, navLink) {
     }
 }
 
-function openModal(imageUrl, caption) {
+function openModal(imageUrl) {
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
-    const modalCap = document.getElementById('modalCaption');
     const loader = document.getElementById('modal-loader');
 
-    if (modal && modalImg && modalCap && loader) {
+    if (modal && modalImg && loader) {
         loader.textContent = 'กำลังโหลดรูปภาพ...';
         loader.style.display = 'block';
         modalImg.style.display = 'none';
-
-        // --- ส่วนที่แก้ไข ---
-        // 1. ตรวจสอบว่ามี caption หรือไม่ (ไม่ใช่ undefined, null, หรือค่าว่าง)
-        if (caption) {
-            modalCap.textContent = caption;
-            modalCap.style.display = 'block'; // แสดง element ของ caption
-        } else {
-            modalCap.textContent = ''; // เคลียร์ค่าทิ้ง
-            modalCap.style.display = 'none';  // ซ่อน element ของ caption ไปเลย
-        }
-        // --- สิ้นสุดส่วนที่แก้ไข ---
 
         modalImg.onload = () => {
             loader.style.display = 'none';
@@ -69,7 +57,6 @@ function openModal(imageUrl, caption) {
         };
 
         modalImg.src = imageUrl;
-        // modalCap.textContent = caption; // <-- บรรทัดนี้ไม่ต้องใช้แล้ว เพราะย้ายไปในเงื่อนไขข้างบน
         modal.style.display = 'block';
     }
 }
