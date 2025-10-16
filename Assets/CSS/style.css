@@ -102,9 +102,19 @@ h2 { font-size: clamp(1.4rem, 1.2rem + 1.5vw, 1.8rem); color: var(--text-color);
     margin: 4px 0 0 0;
 }
 
-input, select, button { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s; font-family: 'Kanit', sans-serif; background-color: var(--bg-white); color: var(--text-color); }
-input:focus, select:focus, button:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); outline: none; }
-.input-error { border-color: var(--danger-color) !important; box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important; }
+input, select, button {
+    width: 100%;
+    height: 48px; /* <-- เพิ่มบรรทัดนี้ */
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s;
+    font-family: 'Kanit', sans-serif;
+    background-color: var(--bg-white);
+    color: var(--text-color);
+}
 
 input::placeholder {
     color: var(--sub-text-color);
@@ -510,7 +520,22 @@ body.dark-mode .view-image-btn:active {
    MODAL (POPUP) STYLES
    =================================================== */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); animation: fadeIn 0.3s; }
-.modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg-white); padding: 20px; border-radius: 10px; max-width: 90%; max-height: 80%; text-align: center; animation: slideIn 0.3s; }
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-white);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 80%;
+    text-align: center;
+    animation: slideIn 0.3s;
+    /* --- เพิ่ม 2 บรรทัดนี้ --- */
+    min-width: 200px;
+    min-height: 100px;
+}
 #modalImage { max-width: 100%; max-height: 70vh; border-radius: 8px; }
 .close-button { position: absolute; top: 10px; right: 25px; color: #fff; font-size: 35px; font-weight: bold; cursor: pointer; }
 @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
@@ -982,5 +1007,32 @@ body.dark-mode .insulin-image {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding-right: 40px; /* เพิ่มที่ว่างด้านขวาให้ลูกศรไม่ทับข้อความ */
+    padding-right: 40px;
+    height: 100%; /* <-- เพิ่มบรรทัดนี้ */
+}
+
+/* ===================================================
+   FLOATING ACTION BUTTON
+   =================================================== */
+#scroll-to-summary-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;  /* ทำให้เป็นสี่เหลี่ยมจัตุรัส */
+    height: 56px; /* ทำให้เป็นสี่เหลี่ยมจัตุรัส */
+    background-color: rgba(0, 123, 255, 0.9); /* ลดความเข้มของสีลง */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    border: none;
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 990;
+    transition: transform 0.2s ease-out, background-color 0.2s;
+}
+#scroll-to-summary-btn:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-color); /* เมื่อเมาส์ชี้ให้สีเข้มขึ้น */
 }

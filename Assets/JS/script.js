@@ -32,6 +32,25 @@ function showPage(pageId, navLink) {
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
     navLink.classList.add('active');
     window.scrollTo(0, 0);
+
+    // --- จุดที่แก้ไข ---
+    const scrollToSummaryBtn = document.getElementById('scroll-to-summary-btn');
+    if (scrollToSummaryBtn) {
+        // ถ้าหน้าที่กำลังจะแสดง ไม่ใช่หน้า 'คำนวณ' ให้ซ่อนปุ่มลอยเสมอ
+        if (pageId !== 'calculatorPage') {
+            scrollToSummaryBtn.style.display = 'none';
+        } else {
+            // แต่ถ้ากลับมาที่หน้า 'คำนวณ' ให้เช็คว่าขั้นตอนที่ 2 แสดงอยู่หรือไม่
+            // ถ้าใช่ ก็ให้แสดงปุ่มลอยกลับมาด้วย
+            if (document.getElementById('meal-calculation').style.display === 'block') {
+                scrollToSummaryBtn.style.display = 'block';
+            } else {
+                scrollToSummaryBtn.style.display = 'none';
+            }
+        }
+    }
+    // --- สิ้นสุดการแก้ไข ---
+
     if (pageId === 'historyPage') {
         renderHistory();
     }
@@ -107,6 +126,16 @@ function openTab(evt, tabName) {
     document.querySelectorAll('.tab-link').forEach(link => link.className = link.className.replace(" active", ""));
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+}
+
+function finalizeFoodSelection() {
+    // 1. ปิดหมวดหมู่อาหารทั้งหมดที่เปิดอยู่
+    document.querySelectorAll('#food-selection-tables .accordion-content').forEach(item => {
+        item.style.maxHeight = null;
+    });
+
+    // 2. เลื่อนหน้าจอไปยังหัวข้อ "รายการอาหารที่คุณเลือก"
+    document.querySelector('.selected-h3').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function toggleAccordion(header) {
@@ -190,7 +219,7 @@ function initializeFoodList() {
                         <span class="fim-info">
                             ${food.unit} ≈ <strong>${carbPerServe.toFixed(0)} กรัม</strong>
                         </span>
-                        ${food.imageUrl ? `<button class="view-image-btn" onclick="openModal('${food.imageUrl}', '${food.caption}')">📸 <span class="btn-label">ดูรูป</span></button>` : ''}
+                        ${food.imageUrl ? `<button class="view-image-btn" onclick="openModal('${food.imageUrl}')">📸 <span class="btn-label">ดูรูป</span></button>` : ''}
                     </div>
                 </div>`;
 
@@ -234,7 +263,7 @@ function filterFoodList() {
                         <span class="fim-info">
                             ${food.unit} ≈ <strong>${food.carbPerServe.toFixed(0)} กรัม</strong>
                         </span>
-                        ${food.imageUrl ? `<button class="view-image-btn" onclick="openModal('${food.imageUrl}', '${food.caption}')">📸 <span class="btn-label">ดูรูป</span></button>` : ''}
+                        ${food.imageUrl ? `<button class="view-image-btn" onclick="openModal('${food.imageUrl}')">📸 <span class="btn-label">ดูรูป</span></button>` : ''}
                     </div>
                 </div>`;
         }
@@ -411,14 +440,10 @@ function renderSelectedFoods() {
         const totalCarb = food.servings * food.carbPerServe;
         const calculatedUnitText = calculateActualAmount(food.unit, food.servings);
 
-        // --- ส่วนที่เพิ่มเข้ามา ---
-        // สร้างตัวแปรสำหรับเก็บ HTML ของคำอธิบาย
         let customHintHtml = '';
-        // ตรวจสอบว่ามี "ป้าย" isCustom หรือไม่
         if (food.isCustom) {
             customHintHtml = `<div class="sfi-custom-hint">*1 หน่วย คือ 1 รายการที่ท่านกรอก (เช่น 1 ซอง, 1 กล่อง, 1 ผล)</div>`;
         }
-        // --- สิ้นสุดส่วนที่เพิ่มเข้ามา ---
 
         listHtml += `
             <div class="selected-food-item" id="selected-${food.id}">
@@ -440,7 +465,7 @@ function renderSelectedFoods() {
                             </div>
                         </div>
                         <div class="sfi-actions">
-                            ${food.imageUrl ? `<button class="view-image-btn" onclick="openModal('${food.imageUrl}', '${food.caption}')">📸 <span class="btn-label">ดูรูป</span></button>` : ''}
+                            ${food.imageUrl ? `<button class="view-image-btn" onclick="openModal('${food.imageUrl}')">📸 <span class="btn-label">ดูรูป</span></button>` : ''}
                             <button class="remove-btn" onclick="removeFood(${food.id})">❌ <span class="btn-label">ลบ</span></button>
                         </div>
                     </div>
@@ -457,7 +482,19 @@ function renderSelectedFoods() {
 
 function updateTotalCarb() {
     const total = selectedFoods.reduce((sum, food) => sum + (food.servings * food.carbPerServe), 0);
-    document.getElementById('total-carb-value').textContent = total.toFixed(0);
+
+    // อัปเดตค่าในแถบสรุปข้อมูลแบบลอย
+    document.getElementById('total-carb-value-sticky').textContent = `${total.toFixed(0)} กรัม`;
+
+    // --- ส่วนที่เพิ่มเข้ามา ---
+    const totalCarbBox = document.querySelector('.total-carb-box-sticky');
+    if (totalCarbBox) {
+        totalCarbBox.classList.remove('flash-update');
+        void totalCarbBox.offsetWidth;
+        totalCarbBox.classList.add('flash-update');
+    }
+    // --- สิ้นสุดส่วนที่เพิ่มเข้ามา ---
+
     return total;
 }
 
@@ -657,6 +694,10 @@ async function calculatePersonalFactors() {
     factorsDisplay.style.display = 'block';
     document.getElementById('meal-calculation').style.display = 'block';
     factorsDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // --- จุดที่แก้ไข ---
+    // สั่งให้ปุ่มลอยแสดงผลขึ้นมา
+    document.getElementById('scroll-to-summary-btn').style.display = 'block';
 }
 
 function calculateBolus() {
