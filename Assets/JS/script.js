@@ -483,17 +483,18 @@ function renderSelectedFoods() {
 function updateTotalCarb() {
     const total = selectedFoods.reduce((sum, food) => sum + (food.servings * food.carbPerServe), 0);
 
-    // อัปเดตค่าในแถบสรุปข้อมูลแบบลอย
-    document.getElementById('total-carb-value-sticky').textContent = `${total.toFixed(0)} กรัม`;
+    // --- ส่วนที่แก้ไข ---
+    // เปลี่ยนกลับไปอัปเดตค่าในกล่องสรุปผลเดิมที่อยู่ในหน้าเว็บ
+    document.getElementById('total-carb-value').textContent = total.toFixed(0);
 
-    // --- ส่วนที่เพิ่มเข้ามา ---
-    const totalCarbBox = document.querySelector('.total-carb-box-sticky');
+    // เปลี่ยนเป้าหมายของอนิเมชันกระพริบให้ถูกต้อง
+    const totalCarbBox = document.querySelector('.total-carb-box');
     if (totalCarbBox) {
         totalCarbBox.classList.remove('flash-update');
         void totalCarbBox.offsetWidth;
         totalCarbBox.classList.add('flash-update');
     }
-    // --- สิ้นสุดส่วนที่เพิ่มเข้ามา ---
+    // --- สิ้นสุดการแก้ไข ---
 
     return total;
 }
@@ -716,10 +717,18 @@ function calculateBolus() {
     resultsCard.style.display = 'none';
     hypoBox.style.display = 'none';
 
-    if (!validateInput(cbgEl) || !validateInput(tbgEl)) {
-        cbgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // --- ส่วนที่แก้ไข ---
+    // เรียกใช้ validateInput แยกกันก่อน เพื่อป้องกัน Short-circuiting
+    const isCbgValid = validateInput(cbgEl);
+    const isTbgValid = validateInput(tbgEl);
+
+    // จากนั้นค่อยนำผลลัพธ์มาตรวจสอบใน if
+    if (!isCbgValid || !isTbgValid) {
+        // เลื่อนไปยังช่องแรกที่กรอกข้อมูลไม่ถูกต้อง
+        (isCbgValid ? tbgEl : cbgEl).scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
+    // --- สิ้นสุดการแก้ไข ---
 
     const CBG = parseFloat(cbgEl.value);
     const TBG = parseFloat(tbgEl.value);
@@ -734,8 +743,6 @@ function calculateBolus() {
         const correctionBolus = (CBG > TBG && ISF > 0) ? (CBG - TBG) / ISF : 0;
         const totalBolus = Math.max(0, carbBolus) + Math.max(0, correctionBolus);
 
-        // --- ส่วนที่แก้ไข ---
-        // เปลี่ยนจากการปัดเศษเป็น .5 มาเป็นจำนวนเต็มที่ใกล้ที่สุด
         const roundedTotalBolus = Math.round(totalBolus);
 
         document.getElementById('carb-bolus-value').textContent = `${Math.max(0, carbBolus).toFixed(1)} ยูนิต`;
