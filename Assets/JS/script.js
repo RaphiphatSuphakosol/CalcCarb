@@ -33,7 +33,6 @@ function showPage(pageId, navLink) {
     navLink.classList.add('active');
     window.scrollTo(0, 0);
 
-    // --- จุดที่แก้ไข ---
     const scrollToSummaryBtn = document.getElementById('scroll-to-summary-btn');
     if (scrollToSummaryBtn) {
         // ถ้าหน้าที่กำลังจะแสดง ไม่ใช่หน้า 'คำนวณ' ให้ซ่อนปุ่มลอยเสมอ
@@ -49,9 +48,14 @@ function showPage(pageId, navLink) {
             }
         }
     }
-    // --- สิ้นสุดการแก้ไข ---
 
+    // --- จุดที่แก้ไข ---
+    // ถ้าเป็นหน้า 'ประวัติ' ให้เรียกฟังก์ชัน renderHistory()
     if (pageId === 'historyPage') {
+        renderHistory();
+    }
+    // ถ้าเป็นหน้า 'เกี่ยวกับ' ให้เรียกฟังก์ชัน currentSlide(1)
+    if (pageId === 'creditsPage') {
         currentSlide(1);
     }
 }
@@ -568,11 +572,17 @@ function renderHistory() {
     }
     let historyHtml = '';
     history.forEach(entry => {
+        // --- ส่วนที่แก้ไข ---
+        // ตรวจสอบให้แน่ใจว่า entry.totalBolus เป็นตัวเลขก่อนใช้ .toFixed()
+        const totalBolusDisplay = typeof entry.totalBolus === 'number'
+            ? entry.totalBolus.toFixed(1)
+            : entry.totalBolus;
+
         historyHtml += `
             <div class="history-item">
                 <p class="history-date">${entry.date}</p>
                 <p>น้ำตาลก่อนอาหาร: <strong>${entry.cbg}</strong> mg/dL, คาร์บรวม: <strong>${entry.totalCarb}</strong> g</p>
-                <p>สรุปอินซูลินที่ฉีด: <span class="history-main-value">${entry.totalBolus} ยูนิต</span></p>
+                <p>สรุปอินซูลินที่ฉีด: <span class="history-main-value">${totalBolusDisplay} ยูนิต</span></p>
             </div>`;
     });
     container.innerHTML = historyHtml;
@@ -717,18 +727,13 @@ function calculateBolus() {
     resultsCard.style.display = 'none';
     hypoBox.style.display = 'none';
 
-    // --- ส่วนที่แก้ไข ---
-    // เรียกใช้ validateInput แยกกันก่อน เพื่อป้องกัน Short-circuiting
     const isCbgValid = validateInput(cbgEl);
     const isTbgValid = validateInput(tbgEl);
 
-    // จากนั้นค่อยนำผลลัพธ์มาตรวจสอบใน if
     if (!isCbgValid || !isTbgValid) {
-        // เลื่อนไปยังช่องแรกที่กรอกข้อมูลไม่ถูกต้อง
         (isCbgValid ? tbgEl : cbgEl).scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
-    // --- สิ้นสุดการแก้ไข ---
 
     const CBG = parseFloat(cbgEl.value);
     const TBG = parseFloat(tbgEl.value);
@@ -757,11 +762,14 @@ function calculateBolus() {
             var(--accent-color) ${carbPercent}% 100%
         )`;
 
+        // --- ส่วนที่แก้ไข ---
+        // เราจะบันทึก roundedTotalBolus (ที่เป็นตัวเลข) ลงไปตรงๆ
+        // ไม่ต้องใช้ .toFixed(1) อีกต่อไป
         saveToHistory({
             date: new Date().toLocaleString('th-TH', { dateStyle: 'medium', timeStyle: 'short'}),
             cbg: CBG,
             totalCarb: totalCarb,
-            totalBolus: roundedTotalBolus.toFixed(1)
+            totalBolus: roundedTotalBolus // <--- แก้ไขจุดนี้
         });
 
         resultsCard.style.display = 'grid';
