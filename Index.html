@@ -34,47 +34,49 @@
                 <p class="warning-text">⚠️ **สำคัญ:** ค่าเหล่านี้ต้องมาจากคำแนะนำของแพทย์</p>
 
                 <div class="input-grid">
-                    <div class="input-group">
-                        <label for="weight">น้ำหนักตัว (กิโลกรัม):</label>
-                        <input type="number" id="weight" value="60" min="10" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label for="insulin-type">ชนิดของอินซูลินที่ใช้:</label>
-                        <div class="insulin-selector-container">
-                            <div class="custom-select-wrapper">
-                                <select id="insulin-type">
-                                    <option value="1800" selected>Aspart (Novorapid)</option>
-                                    <option value="1500">RI (Actrapid)</option>
-                                </select>
-                            </div>
-                            <img id="insulin-image-display" src="" alt="รูปปากกาอินซูลิน" class="insulin-image">
+                <div class="input-group">
+                    <label for="weight">น้ำหนักตัว (กิโลกรัม):</label>
+                    <input type="number" id="weight" value="60" min="10" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="insulin-type">ชนิดของอินซูลินที่ใช้:</label>
+                    <div class="insulin-selector-container">
+                        <div class="custom-select-wrapper">
+                            <select id="insulin-type">
+                                <option value="1800" selected>Aspart (Novorapid)</option>
+                                <option value="1500">RI (Actrapid)</option>
+                            </select>
                         </div>
+                        <img id="insulin-image-display" src="" alt="รูปปากกาอินซูลิน" class="insulin-image">
                     </div>
                 </div>
+            </div>
 
-                <div class="input-grid">
-                    <div class="input-group">
-                        <label for="age-group">กลุ่มอายุ:</label>
-                        <div class="custom-select-wrapper">
-                            <select id="age-group">
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="age-group">กลุ่มอายุ:</label>
+                    <div class="custom-select-wrapper">
+                        <select id="age-group">
                             <option value="adult" selected>ผู้ใหญ่ (0.4-0.6 ยูนิต/กิโลกรัม/วัน)</option>
                             <option value="toddler">เด็กเล็ก (0.4-0.6 ยูนิต/กิโลกรัม/วัน)</option>
                             <option value="preteen">เด็กก่อนวัยรุ่น (0.7-1.0 ยูนิต/กิโลกรัม/วัน)</option>
                             <option value="teen">วัยรุ่น (1.0-2.0 ยูนิต/กิโลกรัม/วัน)</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="tdd-multiplier">Total daily dose (TDD) (ยูนิต/กิโลกรัม/วัน):</label>
-                        <input type="number" id="tdd-multiplier" min="0.4" max="0.6" step="0.05" placeholder="แนะนำ 0.5 (ช่วง 0.4-0.6)">
-                    </div>
                 </div>
-                <div class="input-grid">
-                    <div class="input-group">
-                        <label for="tbg">ระดับน้ำตาลเป้าหมาย (mg/dL):</label>
-                        <input type="number" id="tbg" value="120" min="70" step="1">
-                    </div>
-                    <div class="input-group"></div>
+                <div class="input-group">
+                    <label for="tdd-multiplier">Total daily dose (TDD) (ยูนิต/กิโลกรัม/วัน):</label>
+                    <input type="number" id="tdd-multiplier" min="0.4" max="0.6" step="0.05" placeholder="แนะนำ 0.5 (ช่วง 0.4-0.6)">
                 </div>
+            </div>
+
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="tbg">ระดับน้ำตาลเป้าหมาย (mg/dL):</label>
+                    <input type="number" id="tbg" value="120" min="70" step="1">
+                </div>
+                <div class="input-group"></div>
+            </div>
 
 
                 <button class="calculate-btn" onclick="calculatePersonalFactors()">คำนวณและบันทึกค่าเฉพาะตัว</button>
@@ -246,8 +248,8 @@
                 <hr>
                 <h3>ผู้จัดทำ</h3>
                 <ul>
-                <li>นสภ. ระพีพัฒน์ ศุภโกศล มหาวิทยาลัยมหาสาราม</li>
-                <li>นสภ. จิรัชยา ตรีทศ มหาวิทยาลัยมหาสารคาม</li>
+                <li>นสภ. ระพีพัฒน์ ศุภโกศล มหาวิทยาลัยมหาสาราม <br><b>รหัสนิสิต</b> 63010710054</li>
+                <li>นสภ. จิรัชยา ตรีทศ มหาวิทยาลัยมหาสารคาม <br><b>รหัสนิสิต</b> 63010710015</li>
                 </ul>
                 <h3>แหล่งข้อมูลอ้างอิง</h3>
                 <ul>
@@ -281,6 +283,7 @@
             </div>
         </div>
     </div>
+        <button id="scroll-to-summary-btn" title="เลื่อนไปที่สรุป" style="display: none;" onclick="finalizeFoodSelection()"></button>
     <script src="Assets/JS/script.js"></script>
 </body>
 </html>
