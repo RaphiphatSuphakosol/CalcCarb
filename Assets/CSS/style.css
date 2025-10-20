@@ -917,6 +917,35 @@ body.dark-mode .modal-header {
     font-weight: 700;
 }
 
+/* ⭐️ NEW STYLES FOR SUPPRESS CHECKBOX */
+.modal-suppress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    margin-top: 20px; /* Space from text */
+    border-radius: 6px;
+    background-color: var(--bg-light);
+}
+body.dark-mode .modal-suppress-container {
+     background-color: #121212;
+}
+.modal-suppress-container label {
+    font-size: 0.9em;
+    color: var(--sub-text-color);
+    font-weight: 600;
+}
+.modal-suppress-container input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    margin: 0;
+    accent-color: var(--primary-color);
+    transform: scale(1.2); /* Make it a bit bigger */
+}
+/* ⭐️ END NEW STYLES */
+
+
 .modal-footer {
     padding: 20px;
     background-color: var(--bg-light);

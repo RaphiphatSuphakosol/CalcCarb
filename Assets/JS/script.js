@@ -5,16 +5,11 @@ let foodDatabase = {};
 let allFoodItems = []; // A flat array for easier searching
 let favoriteFoods = [];
 let history = [];
+let suppressedTdds = []; // ⭐️ NEW: เก็บค่า TDD ที่ผู้ใช้ไม่ต้องการให้เตือน
+let currentTddWarningValue = null; // ⭐️ NEW: เก็บค่า TDD ที่กำลังเตือน
 const starSVG = `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>`;
 
-const tddRanges = {
-    adult: { min: 0.4, max: 0.6, default: 0.5, step: 0.05, text: "0.4 - 0.6" },
-    toddler: { min: 0.4, max: 0.6, default: 0.5, step: 0.05, text: "0.4 - 0.6" },
-    preteen: { min: 0.7, max: 1.0, default: 0.85, step: 0.05, text: "0.7 - 1.0" },
-    teen: { min: 1.0, max: 2.0, default: 1.5, step: 0.1, text: "1.0 - 2.0" }
-};
-
-let tddWarningResolver = null; // ตัวแปรสำหรับจัดการการยืนยันใน Modal
+let tddWarningResolver = null;
 let slideIndex = 1;
 // --- Utility Functions ---
 function debounce(func, delay) {
@@ -35,12 +30,9 @@ function showPage(pageId, navLink) {
 
     const scrollToSummaryBtn = document.getElementById('scroll-to-summary-btn');
     if (scrollToSummaryBtn) {
-        // ถ้าหน้าที่กำลังจะแสดง ไม่ใช่หน้า 'คำนวณ' ให้ซ่อนปุ่มลอยเสมอ
         if (pageId !== 'calculatorPage') {
             scrollToSummaryBtn.style.display = 'none';
         } else {
-            // แต่ถ้ากลับมาที่หน้า 'คำนวณ' ให้เช็คว่าขั้นตอนที่ 2 แสดงอยู่หรือไม่
-            // ถ้าใช่ ก็ให้แสดงปุ่มลอยกลับมาด้วย
             if (document.getElementById('meal-calculation').style.display === 'block') {
                 scrollToSummaryBtn.style.display = 'block';
             } else {
@@ -49,12 +41,9 @@ function showPage(pageId, navLink) {
         }
     }
 
-    // --- จุดที่แก้ไข ---
-    // ถ้าเป็นหน้า 'ประวัติ' ให้เรียกฟังก์ชัน renderHistory()
     if (pageId === 'historyPage') {
         renderHistory();
     }
-    // ถ้าเป็นหน้า 'เกี่ยวกับ' ให้เรียกฟังก์ชัน currentSlide(1)
     if (pageId === 'creditsPage') {
         currentSlide(1);
     }
@@ -90,22 +79,22 @@ function closeModal() {
 
     if (modal && modalImg) {
         modal.style.display = 'none';
-        // เคลียร์ค่ารูปภาพทิ้งเมื่อปิด Modal เพื่อคืน Memory และป้องกันข้อผิดพลาด
         modalImg.src = '';
         modalImg.onload = null;
         modalImg.onerror = null;
     }
 }
 
-// ========== START: ฟังก์ชันใหม่สำหรับ Custom Warning Modal ==========
+// ========== START: ฟังก์ชันสำหรับ Custom Warning Modal ==========
 function showTddWarningModal(message) {
     const modal = document.getElementById('custom-warning-modal');
     const warningText = document.getElementById('modal-warning-text');
+    const suppressCheckbox = document.getElementById('modal-suppress-warning'); // ⭐️ NEW
 
-    warningText.innerHTML = message; // ใช้ innerHTML เพื่อให้ tag <br> และ <b> ทำงาน
+    warningText.innerHTML = message;
+    suppressCheckbox.checked = false; // ⭐️ NEW: รีเซ็ต checkbox ทุกครั้งที่เปิด
     modal.classList.add('visible');
 
-    // คืนค่า Promise ที่จะถูก resolve เมื่อผู้ใช้กดปุ่ม
     return new Promise((resolve) => {
         tddWarningResolver = resolve;
     });
@@ -115,15 +104,26 @@ function handleModalDecision(confirmed) {
     const modal = document.getElementById('custom-warning-modal');
     modal.classList.remove('visible');
 
-    // หน่วงเวลาเล็กน้อยเพื่อให้ animation ของ CSS ทำงานจบก่อน
+    // --- ⭐️ NEW LOGIC START ---
+    const suppressCheckbox = document.getElementById('modal-suppress-warning');
+    if (confirmed && suppressCheckbox.checked && currentTddWarningValue !== null) {
+        // ถ้าผู้ใช้ยืนยัน, ติ๊กถูก, และมีค่า TDD ที่กำลังเตือน
+        if (!suppressedTdds.includes(currentTddWarningValue)) {
+            suppressedTdds.push(currentTddWarningValue);
+            localStorage.setItem('suppressedTddWarnings', JSON.stringify(suppressedTdds));
+        }
+    }
+    currentTddWarningValue = null; // เคลียร์ค่า TDD ที่กำลังเตือนเสมอ
+    // --- ⭐️ NEW LOGIC END ---
+
     setTimeout(() => {
         if (tddWarningResolver) {
-            tddWarningResolver(confirmed); // ส่งค่า true (ยืนยัน) หรือ false (ยกเลิก) กลับไป
-            tddWarningResolver = null; // เคลียร์ค่าทิ้ง
+            tddWarningResolver(confirmed);
+            tddWarningResolver = null;
         }
     }, 300);
 }
-// ========== END: ฟังก์ชันใหม่สำหรับ Custom Warning Modal ==========
+// ========== END: ฟังก์ชันสำหรับ Custom Warning Modal ==========
 
 function openTab(evt, tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = "none");
@@ -133,12 +133,9 @@ function openTab(evt, tabName) {
 }
 
 function finalizeFoodSelection() {
-    // 1. ปิดหมวดหมู่อาหารทั้งหมดที่เปิดอยู่
     document.querySelectorAll('#food-selection-tables .accordion-content').forEach(item => {
         item.style.maxHeight = null;
     });
-
-    // 2. เลื่อนหน้าจอไปยังหัวข้อ "รายการอาหารที่คุณเลือก"
     document.querySelector('.selected-h3').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
@@ -288,13 +285,9 @@ function calculateActualAmount(unitString, servings) {
     if (!unitString || isNaN(servings) || servings <= 0) {
         return "-";
     }
-
-    // --- ส่วนที่แก้ไข ---
-    // ตรวจสอบว่าในหน่วยนั้นมีตัวเลขอยู่หรือไม่ (เช่น "1 ทัพพี" vs "หน่วย")
     const hasNumberInUnit = /\d/.test(unitString);
 
     if (hasNumberInUnit) {
-        // ถ้ามีตัวเลข: ใช้ตรรกะการคำนวณแบบเดิมที่ซับซ้อน
         const gcd = (a, b) => b ? gcd(b, a % b) : a;
         return unitString.replace(/(\d+(\.\d+)?)\s*\/\s*(\d+(\.\d+)?)|(\d+(\.\d+)?)/g, (match) => {
             if (match.includes('/')) {
@@ -326,7 +319,6 @@ function calculateActualAmount(unitString, servings) {
             return match;
         });
     } else {
-        // ถ้าไม่มีตัวเลข (เช่น "หน่วย"): ให้แสดงจำนวนตามด้วยหน่วยตรงๆ เลย
         return `${formatNumber(servings)} ${unitString}`;
     }
 }
@@ -486,20 +478,14 @@ function renderSelectedFoods() {
 
 function updateTotalCarb() {
     const total = selectedFoods.reduce((sum, food) => sum + (food.servings * food.carbPerServe), 0);
-
-    // --- ส่วนที่แก้ไข ---
-    // เปลี่ยนกลับไปอัปเดตค่าในกล่องสรุปผลเดิมที่อยู่ในหน้าเว็บ
     document.getElementById('total-carb-value').textContent = total.toFixed(0);
 
-    // เปลี่ยนเป้าหมายของอนิเมชันกระพริบให้ถูกต้อง
     const totalCarbBox = document.querySelector('.total-carb-box');
     if (totalCarbBox) {
         totalCarbBox.classList.remove('flash-update');
         void totalCarbBox.offsetWidth;
         totalCarbBox.classList.add('flash-update');
     }
-    // --- สิ้นสุดการแก้ไข ---
-
     return total;
 }
 
@@ -572,8 +558,6 @@ function renderHistory() {
     }
     let historyHtml = '';
     history.forEach(entry => {
-        // --- ส่วนที่แก้ไข ---
-        // ตรวจสอบให้แน่ใจว่า entry.totalBolus เป็นตัวเลขก่อนใช้ .toFixed()
         const totalBolusDisplay = typeof entry.totalBolus === 'number'
             ? entry.totalBolus.toFixed(1)
             : entry.totalBolus;
@@ -597,10 +581,12 @@ function clearHistory() {
 }
 
 // --- Calculation & Data Persistence ---
+
 function savePersonalFactors() {
     const settings = {
         weight: document.getElementById('weight').value,
-        ageGroup: document.getElementById('age-group').value,
+        height: document.getElementById('height').value,
+        age: document.getElementById('age').value,
         insulinType: document.getElementById('insulin-type').value,
         tddMultiplier: document.getElementById('tdd-multiplier').value,
         tbg: document.getElementById('tbg').value
@@ -613,23 +599,17 @@ function loadPersonalFactors() {
     if (savedSettings) {
         const settings = JSON.parse(savedSettings);
         document.getElementById('weight').value = settings.weight || '60';
-        document.getElementById('age-group').value = settings.ageGroup || 'adult';
+        document.getElementById('height').value = settings.height || '160';
+        document.getElementById('age').value = settings.age || '30';
         document.getElementById('insulin-type').value = settings.insulinType || '1800';
         document.getElementById('tbg').value = settings.tbg || '120';
+        document.getElementById('tdd-multiplier').value = settings.tddMultiplier || '';
+    }
 
-        const multiplierInput = document.getElementById('tdd-multiplier');
-        const ageGroup = document.getElementById('age-group').value;
-        const range = tddRanges[ageGroup];
+    updateTddRecommendations();
 
-        if (range) {
-            multiplierInput.min = range.min;
-            multiplierInput.max = range.max;
-            multiplierInput.step = range.step;
-            multiplierInput.placeholder = `แนะนำ ${range.default} (ช่วง ${range.text})`;
-        }
-        multiplierInput.value = settings.tddMultiplier || (range ? range.default : '0.5');
-    } else {
-        updateTddMultiplier();
+    if (savedSettings && JSON.parse(savedSettings).tddMultiplier) {
+         document.getElementById('tdd-multiplier').value = JSON.parse(savedSettings).tddMultiplier;
     }
 }
 
@@ -643,54 +623,166 @@ function validateInput(element, allowText = false) {
     return true;
 }
 
-function updateTddMultiplier() {
-    const ageGroup = document.getElementById('age-group').value;
-    const multiplierInput = document.getElementById('tdd-multiplier');
-    const range = tddRanges[ageGroup];
-
-    if (range) {
-        multiplierInput.min = range.min;
-        multiplierInput.max = range.max;
-        multiplierInput.step = range.step;
-        multiplierInput.value = range.default;
-        multiplierInput.placeholder = `แนะนำ ${range.default} (ช่วง ${range.text})`;
+/**
+ * คำนวณ BMI จากน้ำหนัก (kg) และส่วนสูง (cm)
+ */
+function calculateBMI(weight, heightCm) {
+    if (!weight || !heightCm || heightCm <= 0) {
+        return 0;
     }
+    const heightM = heightCm / 100;
+    return weight / (heightM * heightM);
 }
 
-async function calculatePersonalFactors() {
-    const weightEl = document.getElementById('weight');
-    const multiplierEl = document.getElementById('tdd-multiplier');
+/**
+ * ดึงช่วง TDD ที่แนะนำตามเกณฑ์ใหม่
+ */
+function getTddRange(age, isObese) {
+    let range;
+    let categoryName = "";
 
-    if (!validateInput(weightEl) || !validateInput(multiplierEl)) {
-        (validateInput(weightEl) ? multiplierEl : weightEl).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (age >= 13) {
+        // --- 1. วัยรุ่นหรือผู้ใหญ่ ---
+        if (isObese) {
+            // 1.1 อ้วน
+            if (age >= 15) {
+                range = { min: 0.9, max: 1.0, default: 0.95, step: 0.05, text: "0.9 – 1.0" };
+                categoryName = "วัยรุ่น/ผู้ใหญ่ (อ้วน, อายุ ≥ 15)";
+            } else {
+                range = { min: 0.8, max: 0.9, default: 0.85, step: 0.05, text: "0.8 – 0.9" };
+                categoryName = "วัยรุ่น (อ้วน, อายุ 13-14)";
+            }
+        } else {
+            // 1.2 ไม่อ้วน
+            if (age >= 15) {
+                range = { min: 0.8, max: 0.9, default: 0.85, step: 0.05, text: "0.8 – 0.9" };
+                categoryName = "วัยรุ่น/ผู้ใหญ่ (ไม่อ้วน, อายุ ≥ 15)";
+            } else {
+                range = { min: 0.75, max: 0.8, default: 0.75, step: 0.05, text: "0.75 – 0.8" };
+                categoryName = "วัยรุ่น (ไม่อ้วน, อายุ 13-14)";
+            }
+        }
+    } else {
+        // --- 2. วัยก่อนวัยรุ่น (อายุ < 13 ปี) ---
+        if (isObese) {
+            // 2.1 อ้วน
+            if (age >= 7) {
+                range = { min: 0.6, max: 0.75, default: 0.7, step: 0.05, text: "0.6 – 0.75" };
+                categoryName = "วัยก่อนวัยรุ่น (อ้วน, อายุ 7-12)";
+            } else {
+                range = { min: 0.5, max: 0.6, default: 0.55, step: 0.05, text: "0.5 – 0.6" };
+                categoryName = "วัยเด็ก (อ้วน, อายุ < 7)";
+            }
+        } else {
+            // 2.2 ไม่อ้วน
+            if (age >= 6) {
+                range = { min: 0.5, max: 0.6, default: 0.55, step: 0.05, text: "0.5 – 0.6" };
+                categoryName = "วัยก่อนวัยรุ่น (ไม่อ้วน, อายุ 6-12)";
+            } else if (age >= 3) {
+                range = { min: 0.4, max: 0.5, default: 0.45, step: 0.05, text: "0.4 – 0.5" };
+                categoryName = "วัยเด็ก (ไม่อ้วน, อายุ 3-5)";
+            } else {
+                range = { min: 0.3, max: 0.4, default: 0.35, step: 0.05, text: "0.3 – 0.4" };
+                categoryName = "วัยเด็ก (ไม่อ้วน, อายุ < 3)";
+            }
+        }
+    }
+    return { ...range, categoryName };
+}
+
+/**
+ * อัปเดตช่อง TDD Multiplier ตามข้อมูล น้ำหนัก, ส่วนสูง, อายุ
+ */
+function updateTddRecommendations() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
+    const age = parseFloat(document.getElementById('age').value);
+    const multiplierInput = document.getElementById('tdd-multiplier');
+    const bmiDisplay = document.getElementById('bmi-info-display');
+
+    if (!weight || !height || !age) {
+        bmiDisplay.innerHTML = "กรุณากรอกน้ำหนัก, ส่วนสูง และอายุ";
         return;
     }
 
-    const ageGroupEl = document.getElementById('age-group');
-    const ageGroup = ageGroupEl.value;
-    const multiplier = parseFloat(multiplierEl.value);
-    const range = tddRanges[ageGroup];
+    const bmi = calculateBMI(weight, height);
+    const isObese = bmi >= 25;
+    const range = getTddRange(age, isObese);
 
-    if (range && (multiplier < range.min || multiplier > range.max)) {
-        const ageGroupName = ageGroupEl.options[ageGroupEl.selectedIndex].text;
-        const cleanAgeGroupName = ageGroupName.split('(')[0].trim();
+    multiplierInput.min = range.min;
+    multiplierInput.max = range.max;
+    multiplierInput.step = range.step;
+    multiplierInput.value = range.default;
+    multiplierInput.placeholder = `แนะนำ ${range.default} (ช่วง ${range.text})`;
 
-        const message =
-            `ค่า TDD ที่ท่านกรอก <span class="highlight-warning">${multiplier}</span> ไม่ตรงกับช่วงที่แนะนำสำหรับ<b>กลุ่ม${cleanAgeGroupName}</b> ` +
-            `โดยมีค่าที่แนะนำคือ <span class="highlight-safe">${range.text} ยูนิต/กิโลกรัม/วัน</span> ` +
-            `<br><br>โปรดทราบว่าการใช้ค่าที่ไม่ถูกต้องอาจเป็น<b>อันตรายร้ายแรงได้</b>`;
+    bmiDisplay.innerHTML = `
+        คำนวณ BMI: <strong>${bmi.toFixed(1)}</strong>
+        (กลุ่ม: <strong>${range.categoryName}</strong>)
+        <br>⚠️ โปรดกรอกค่า TDD ตามคำแนะนำของแพทย์
+    `;
+}
 
-        const userConfirmed = await showTddWarningModal(message);
+async function calculatePersonalFactors() {
+    // 1. Validate inputs
+    const weightEl = document.getElementById('weight');
+    const heightEl = document.getElementById('height');
+    const ageEl = document.getElementById('age');
+    const multiplierEl = document.getElementById('tdd-multiplier');
 
-        if (!userConfirmed) {
-            multiplierEl.focus();
-            return;
+    const inputsToValidate = [weightEl, heightEl, ageEl, multiplierEl];
+    let firstInvalidEl = null;
+
+    for (const el of inputsToValidate) {
+        if (!validateInput(el)) {
+            if (!firstInvalidEl) firstInvalidEl = el;
         }
     }
 
+    if (firstInvalidEl) {
+        firstInvalidEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+
+    // 2. รับค่าและคำนวณ Range ที่ถูกต้อง
+    const weight = parseFloat(weightEl.value);
+    const height = parseFloat(heightEl.value);
+    const age = parseFloat(ageEl.value);
+    const multiplier = parseFloat(multiplierEl.value);
+
+    const bmi = calculateBMI(weight, height);
+    const isObese = bmi >= 25;
+    const range = getTddRange(age, isObese);
+
+    // 3. ตรวจสอบ TDD
+    if (multiplier < range.min || multiplier > range.max) {
+
+        // --- ⭐️ NEW LOGIC START ---
+        // 3.1 ตรวจสอบว่าค่​​านี้ถูกระงับการเตือนไว้หรือไม่
+        if (suppressedTdds.includes(multiplier)) {
+            // ถ้าถูกระงับไว้ (suppressed) ให้ข้ามการเตือนไปเลย
+        } else {
+            // 3.2 ถ้ายังไม่ถูกระงับ ให้แสดง modal เตือน
+            currentTddWarningValue = multiplier; // ⭐️ NEW: บันทึกค่าที่กำลังจะเตือน
+
+            const message =
+                `ค่า TDD ที่ท่านกรอก <span class="highlight-warning">${multiplier}</span> ไม่ตรงกับช่วงที่แนะนำสำหรับกลุ่ม <b>${range.categoryName}</b> ` +
+                `ซึ่งแนะนำ <span class="highlight-safe">${range.text}</span> ` +
+                `<br><br>โปรดทราบว่าการใช้ค่าที่ไม่ถูกต้องอาจเป็น<b>อันตรายร้ายแรงได้</b>`;
+
+            const userConfirmed = await showTddWarningModal(message);
+
+            if (!userConfirmed) {
+                multiplierEl.focus();
+                return; // จบการทำงานถ้าผู้ใช้กดยกเลิก
+            }
+            // ถ้า userConfirmed เป็น true (กดยืนยัน) โค้ดจะทำงานต่อไปยังขั้นตอนที่ 4
+        }
+        // --- ⭐️ NEW LOGIC END ---
+    }
+
+    // 4. บันทึกและคำนวณ
     savePersonalFactors();
 
-    const weight = parseFloat(weightEl.value);
     const insulinRule = parseFloat(document.getElementById('insulin-type').value);
 
     TDD = weight * multiplier;
@@ -705,9 +797,6 @@ async function calculatePersonalFactors() {
     factorsDisplay.style.display = 'block';
     document.getElementById('meal-calculation').style.display = 'block';
     factorsDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    // --- จุดที่แก้ไข ---
-    // สั่งให้ปุ่มลอยแสดงผลขึ้นมา
     document.getElementById('scroll-to-summary-btn').style.display = 'block';
 }
 
@@ -762,14 +851,11 @@ function calculateBolus() {
             var(--accent-color) ${carbPercent}% 100%
         )`;
 
-        // --- ส่วนที่แก้ไข ---
-        // เราจะบันทึก roundedTotalBolus (ที่เป็นตัวเลข) ลงไปตรงๆ
-        // ไม่ต้องใช้ .toFixed(1) อีกต่อไป
         saveToHistory({
             date: new Date().toLocaleString('th-TH', { dateStyle: 'medium', timeStyle: 'short'}),
             cbg: CBG,
             totalCarb: totalCarb,
-            totalBolus: roundedTotalBolus // <--- แก้ไขจุดนี้
+            totalBolus: roundedTotalBolus
         });
 
         resultsCard.style.display = 'grid';
@@ -800,29 +886,23 @@ function setupTooltips() {
     });
 }
 
-// --- ส่วนที่เพิ่มเข้ามาสำหรับรูปภาพอินซูลิน ---
-
-// 1. สร้าง Object เพื่อจับคู่ค่า value กับ path ของรูปภาพ
+// --- Insulin Image Functions ---
 const insulinImages = {
-    '1800': 'Assets/Images/novorapid.png', // รูปของ Aspart (Novorapid)
-    '1500': 'Assets/Images/actrapid.png'   // รูปของ RI (Actrapid)
+    '1800': 'Assets/Images/novorapid.png',
+    '1500': 'Assets/Images/actrapid.png'
 };
 
-// 2. สร้างฟังก์ชันสำหรับอัปเดตรูปภาพ
 function updateInsulinImage() {
     const insulinSelect = document.getElementById('insulin-type');
     const imageDisplay = document.getElementById('insulin-image-display');
     const selectedValue = insulinSelect.value;
 
-    // ตั้งค่า opacity เป็น 0 ก่อนเปลี่ยนรูป เพื่อให้เกิด effect fade
     imageDisplay.style.opacity = 0;
 
     setTimeout(() => {
-        // อัปเดต src ของรูปภาพจาก Object ที่เราสร้างไว้
         imageDisplay.src = insulinImages[selectedValue];
-        // คืนค่า opacity เป็น 1 เพื่อให้รูปแสดงผล
         imageDisplay.style.opacity = 1;
-    }, 150); // หน่วงเวลาเล็กน้อยเพื่อให้ fade out ทัน
+    }, 150);
 }
 
 // --- App Initialization ---
@@ -832,25 +912,26 @@ window.onload = () => {
     loadPersonalFactors();
     favoriteFoods = JSON.parse(localStorage.getItem('favoriteFoods')) || [];
     loadHistory();
+    suppressedTdds = JSON.parse(localStorage.getItem('suppressedTddWarnings')) || []; // ⭐️ NEW: โหลดค่าที่เคยระงับ
     loadFoodData();
     setupTooltips();
 
-    // --- เพิ่ม 2 บรรทัดนี้ ---
-    updateInsulinImage(); // 1. เรียกใช้ครั้งแรกตอนโหลดหน้าเว็บ
-    document.getElementById('insulin-type').addEventListener('change', updateInsulinImage); // 2. ให้เรียกใช้ทุกครั้งที่มีการเปลี่ยนค่า
+    updateInsulinImage();
+    document.getElementById('insulin-type').addEventListener('change', updateInsulinImage);
 
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
     const searchInput = document.getElementById('food-search');
     searchInput.addEventListener('input', debounce(filterFoodList, 300));
 
-    const ageGroupSelect = document.getElementById('age-group');
-    ageGroupSelect.addEventListener('change', updateTddMultiplier);
+    document.getElementById('weight').addEventListener('input', updateTddRecommendations);
+    document.getElementById('height').addEventListener('input', updateTddRecommendations);
+    document.getElementById('age').addEventListener('input', updateTddRecommendations);
 
     document.getElementById('modal-confirm-btn').addEventListener('click', () => handleModalDecision(true));
     document.getElementById('modal-cancel-btn').addEventListener('click', () => handleModalDecision(false));
 };
 
-// --- ฟังก์ชันสำหรับควบคุมสไลด์โชว์ ---
+// --- Slideshow Functions ---
 function plusSlides(n) {
   showSlides(slideIndex += n);
 }
